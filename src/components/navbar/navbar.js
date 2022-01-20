@@ -15,12 +15,13 @@ import {
   ToolbarItem
 } from '@patternfly/react-core';
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon';
+import logo from '../../openshift_sentinel_logo.png';
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavOpen: true
+      isNavOpen: false
     };
     this.onNavToggle = () => {
       this.setState({
@@ -35,7 +36,6 @@ class NavBar extends React.Component {
     const headerToolbar = (
       <Toolbar id="toolbar">
         <ToolbarContent>
-          <ToolbarItem>header-tools</ToolbarItem>
         </ToolbarContent>
       </Toolbar>
     );
@@ -54,19 +54,17 @@ class NavBar extends React.Component {
         </MastheadToggle>
         <MastheadMain>
           <MastheadBrand href="https://patternfly.org" onClick={() => console.log('clicked logo')} target="_blank">
-            Logo
+          <img src={logo} width={350}></img>
           </MastheadBrand>
         </MastheadMain>
         <MastheadContent>{headerToolbar}</MastheadContent>
       </Masthead>
     );
-    const Sidebar = <PageSidebar nav="Navigation" isNavOpen={isNavOpen} />;
+    const Sidebar = <PageSidebar nav="I am a Side Bar!" isNavOpen={isNavOpen} />;
 
     return (
       <Page header={Header} sidebar={Sidebar}>
-        <PageSection variant={PageSectionVariants.darker}>Section with darker background</PageSection>
-        <PageSection variant={PageSectionVariants.dark}>Section with dark background</PageSection>
-        <PageSection variant={PageSectionVariants.light}>Section with light background</PageSection>
+                <PageSection variant={PageSectionVariants.light}>Hello</PageSection>
       </Page>
     );
   }

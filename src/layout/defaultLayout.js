@@ -15,7 +15,7 @@ import {
   TextContent,
   Text
 } from '@patternfly/react-core';
-import { DashboardBreadcrumb } from './dashboardWrapper';
+
 import DashboardHeader from './dashboardHeader';
 
 class PageLayoutDefaultNav extends React.Component {
@@ -59,7 +59,6 @@ class PageLayoutDefaultNav extends React.Component {
 
     const Sidebar = <PageSidebar nav={PageNav} />;
     const pageId = 'main-content-page-layout-default-nav';
-    const PageSkipToContent = <SkipToContent href={`#${pageId}`}>Skip to content</SkipToContent>;
 
     return (
       <React.Fragment>
@@ -67,22 +66,11 @@ class PageLayoutDefaultNav extends React.Component {
           header={<DashboardHeader />}
           sidebar={Sidebar}
           isManagedSidebar
-          skipToContent={PageSkipToContent}
-          breadcrumb={DashboardBreadcrumb}
           mainContainerId={pageId}
         >
-          <PageSection variant={PageSectionVariants.light}>
-            <TextContent>
-              <Text component="h1">Main title</Text>
-              <Text component="p">
-                Body text should be Overpass Regular at 16px. It should have leading of 24px because <br />
-                of its relative line height of 1.5.
-              </Text>
-            </TextContent>
-          </PageSection>
           <PageSection>
             <Gallery hasGutter>
-              {Array.apply(0, Array(10)).map((x, i) => (
+              {Array.apply(0, Array(500)).map((x, i) => (
                 <GalleryItem key={i}>
                   <Card>
                     <CardBody>This is a card</CardBody>

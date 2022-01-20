@@ -21,7 +21,7 @@ function App() {
     <>
     <BrowserRouter>
       <ToastContainer />
-          <PageLayoutDefaultNav></PageLayoutDefaultNav>
+          <PageLayoutDefaultNav/>
           <Routes>
           </Routes>
       </BrowserRouter>

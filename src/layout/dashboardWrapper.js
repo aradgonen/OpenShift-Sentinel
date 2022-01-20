@@ -11,16 +11,7 @@ import {
 } from '@patternfly/react-core';
 import DashboardHeader from './dashboardHeader';
 
-export const DashboardBreadcrumb = (
-  <Breadcrumb>
-    <BreadcrumbItem>Section home</BreadcrumbItem>
-    <BreadcrumbItem to="#">Section title</BreadcrumbItem>
-    <BreadcrumbItem to="#">Section title</BreadcrumbItem>
-    <BreadcrumbItem to="#" isActive>
-      Section landing
-    </BreadcrumbItem>
-  </Breadcrumb>
-);
+
 export default class DashboardWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -40,18 +31,12 @@ export default class DashboardWrapper extends React.Component {
     const {
       children,
       mainContainerId,
-      breadcrumb,
       header,
       sidebar,
       sidebarNavOpen,
-      onPageResize,
-      hasNoBreadcrumb
+      onPageResize
     } = this.props;
 
-    let renderedBreadcrumb;
-    if (!hasNoBreadcrumb) {
-      renderedBreadcrumb = breadcrumb !== undefined ? breadcrumb : DashboardBreadcrumb;
-    }
 
     const PageNav = (
       <Nav onSelect={this.onNavSelect} aria-label="Nav">
@@ -88,7 +73,6 @@ export default class DashboardWrapper extends React.Component {
         sidebar={sidebar !== undefined ? sidebar : _sidebar}
         isManagedSidebar
         skipToContent={PageSkipToContent}
-        breadcrumb={renderedBreadcrumb}
         mainContainerId={mainContainerId ? mainContainerId : 'main-content-page-layout-default-nav'}
         onPageResize={onPageResize}
       >

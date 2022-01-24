@@ -17,7 +17,10 @@ import {
 } from '@patternfly/react-core';
 
 import DashboardHeader from './dashboardHeader';
-
+import MultiColorChart from '../components/charts/MultiColorChart';
+import MulticolororderedWithRightAlignedLegend from '../components/charts/MulticolororderedWithRightAlignedLegend';
+import BasicWithRightAlignedLegend from '../components/BasicWithRightAlignedLegend';
+import SegmentedPrimaryMeasure from '../components/charts/SegmentedPrimaryMeasure';
 class PageLayoutDefaultNav extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +72,7 @@ class PageLayoutDefaultNav extends React.Component {
           mainContainerId={pageId}
         >
           <PageSection>
-            <Gallery hasGutter>
+            {/* <Gallery hasGutter>
               {Array.apply(0, Array(500)).map((x, i) => (
                 <GalleryItem key={i}>
                   <Card>
@@ -77,7 +80,19 @@ class PageLayoutDefaultNav extends React.Component {
                   </Card>
                 </GalleryItem>
               ))}
-            </Gallery>
+            </Gallery> */}
+            <Card>
+              <MultiColorChart/>
+            </Card>
+            <Card>
+              <MulticolororderedWithRightAlignedLegend/>
+            </Card>
+            <Card>
+              <BasicWithRightAlignedLegend/>
+            </Card>
+            <Card>
+              <SegmentedPrimaryMeasure/>
+            </Card>
           </PageSection>
         </Page>
       </React.Fragment>

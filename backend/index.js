@@ -1,28 +1,56 @@
-var express = require('express');
-var { graphqlHTTP } = require('express-graphql');
-var { buildSchema } = require('graphql');
+const { makeExecutableSchema } = require("@graphql-tools/schema");
+const express = require("express");
+const { graphqlHTTP } = require("express-graphql");
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  type Query {
-    hello: String
+const greetings = [
+    {
+        name: "hello",
+        id: 1
+    },
+    {
+        name: "bye",
+        id:2
+    }
+]
+
+const schema = makeExecutableSchema({
+  typeDefs: /* GraphQL */ `
+    type Query {
+      greetings(id:Int): Greeting,
+      yoav: Int
+    }
+    type Greeting {
+        name: String,
+        id: Int
+    }
+  `,
+  resolvers: {
+    Query: {
+      greetings(_,{id}){
+          console.log(this);
+          return greetings.find(greet => greet.id === id)
+      },
+      yoav: () => 69
+    }
   }
-`);
+});
 
-// The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
-};
+const defaultQuery = /* GraphQL */ `
+  query exampleQuery {
+    greeting
+  }
+`;
 
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.get('/', (req, res) => {
-    res.send('Hello World!')
+const app = express();
+app.use('/graphql',
+  graphqlHTTP({
+    schema,
+    graphiql: {
+      defaultQuery
+    }
   })
-app.listen(3001);
+);
+
+app.listen(4000, () => {
+  console.info("Listening on http://localhost:4000");
+});

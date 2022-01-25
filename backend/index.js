@@ -1,7 +1,8 @@
+
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-
+var cors = require('cors');
 const greetings = [
     {
         name: "hello",
@@ -50,7 +51,7 @@ app.use('/graphql',
     }
   })
 );
-
+app.use(cors());
 app.listen(4000, () => {
   console.info("Listening on http://localhost:4000");
 });

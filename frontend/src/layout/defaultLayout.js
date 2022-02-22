@@ -41,19 +41,19 @@ class PageLayoutDefaultNav extends React.Component {
     const PageNav = (
       <Nav onSelect={this.onNavSelect} aria-label="Nav">
         <NavList>
-          <NavItem itemId={0} isActive={activeItem === 0} to="#">
+          <NavItem itemId={0} isActive={activeItem === 0} to="/system/panel">
             System Panel
           </NavItem>
-          <NavItem itemId={1} isActive={activeItem === 1} to="#">
+          <NavItem itemId={1} isActive={activeItem === 1} to="/policy">
             Policy
           </NavItem>
-          <NavItem itemId={2} isActive={activeItem === 2} to="#">
+          <NavItem itemId={2} isActive={activeItem === 2} to="/authentication">
             Authentication
           </NavItem>
-          <NavItem itemId={3} isActive={activeItem === 3} to="#">
+          <NavItem itemId={3} isActive={activeItem === 3} to="/network/services">
             Network Services
           </NavItem>
-          <NavItem itemId={4} isActive={activeItem === 4} to="#">
+          <NavItem itemId={4} isActive={activeItem === 4} to="/server">
             Server
           </NavItem>
         </NavList>

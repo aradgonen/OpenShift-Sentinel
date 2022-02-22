@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-import { Route } from 'react-router';
-import { Routes,BrowserRouter} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link
+} from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { loadUser } from "./store/actions/authActions";
@@ -19,12 +23,12 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
-      <ToastContainer />
-          <PageLayoutDefaultNav/>
-          <Routes>
-          </Routes>
-      </BrowserRouter>
+  <Router>
+    <Routes>
+      <Route path="/" element={<PageLayoutDefaultNav />}/>
+      <Route path="server"  element={<h4>sdsdssssssssssssssssssssssssssd</h4>}/>
+    </Routes>
+  </Router>
     </>
   );
 }

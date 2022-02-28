@@ -57,7 +57,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [successful, setSuccessful] = useState(false);
 
-  const { message } = useSelector(state => state.message);
+  // const { message } = useSelector(state => state.message);
   const dispatch = useDispatch();
 
   const onChangeUsername = (e) => {
@@ -147,13 +147,13 @@ const Register = () => {
             </div>
           )}
 
-          {message && (
+          {/* {message && (
             <div className="form-group">
               <div className={ successful ? "alert alert-success" : "alert alert-danger" } role="alert">
                 {message}
               </div>
             </div>
-          )}
+          )} */}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>

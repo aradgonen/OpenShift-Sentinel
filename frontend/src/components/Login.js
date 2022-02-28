@@ -27,7 +27,7 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector(state => state.auth);
-  const { message } = useSelector(state => state.message);
+  // const { message } = useSelector(state => state.message);
 
   const dispatch = useDispatch();
 
@@ -109,13 +109,13 @@ const Login = (props) => {
             </button>
           </div>
 
-          {message && (
+          {/* {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
                 {message}
               </div>
             </div>
-          )}
+          )} */}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>

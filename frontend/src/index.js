@@ -5,7 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './store/reducers/root'
+import rootReducer from './store/reducers/root.js'
 // import {
 //   ApolloClient,
 //   InMemoryCache,
@@ -38,12 +38,12 @@ console.log('frontend started!')
 //     );
 
 ReactDOM.render(
-  <React.StrictMode>
+<>
     {/* <ApolloProvider client={client}> */}
       <Provider store = { store }>
         <App />
       </Provider>
     {/* </ApolloProvider> */}
-  </React.StrictMode>,
+</>,
   document.getElementById('root')
 );

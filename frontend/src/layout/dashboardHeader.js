@@ -89,20 +89,20 @@ export default class DashboardHeader extends React.Component {
     const userDropdownItems = [
       <DropdownGroup key="group 2">
         <DropdownItem key="group 2 profile">My profile</DropdownItem>
-        <DropdownItem key="group 2 user" component="button">
+        <DropdownItem key="group 2 user" component="button" href="/user/managment">
           User management
         </DropdownItem>
-        <DropdownItem key="group 2 logout">Logout</DropdownItem>
+        <DropdownItem key="group 2 logout">Login</DropdownItem>
       </DropdownGroup>
     ];
 
     const fullKebabItems = [
       <DropdownGroup key="group 2">
         <DropdownItem key="group 2 profile">My profile</DropdownItem>
-        <DropdownItem key="group 2 user" component="button">
+        <DropdownItem key="group 2 user" component="button" href="/user/managment">
           User management
         </DropdownItem>
-        <DropdownItem key="group 2 logout">Logout</DropdownItem>
+        <DropdownItem key="group 2 logout">Login</DropdownItem>
       </DropdownGroup>,
       <Divider key="divider" />,
       <DropdownItem key="kebab-1">
@@ -166,7 +166,7 @@ export default class DashboardHeader extends React.Component {
               isOpen={isDropdownOpen}
               toggle={
                 <DropdownToggle icon={<Avatar src={imgAvatar} alt="Avatar" />} onToggle={this.onDropdownToggle}>
-                  John Smith
+                  Guest
                 </DropdownToggle>
               }
               dropdownItems={userDropdownItems}

@@ -25,10 +25,10 @@ export default function NavBar() {
             <img src={sentinel_logo}></img>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/">Home</Link>
+            <Link style={{color:'white'}} to="/">Home</Link>
           </Typography>
-          <Button color="inherit"><Link to="/login">Login</Link></Button>
-          <Button color="inherit"><Link to="/register">Register</Link></Button>
+          <Button color="inherit"><Link style={{color:'white'}} to="/login">Login</Link></Button>
+          <Button color="inherit"><Link style={{color:'white'}} to="/register">Register</Link></Button>
         </Toolbar>
       </AppBar>
     </Box>

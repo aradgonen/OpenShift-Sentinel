@@ -26,6 +26,8 @@ export default function NavBar() {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link style={{color:'white'}} to="/">Home</Link>
+            <Link style={{color:'white'}} to="/graphs">Graphs</Link>
+
           </Typography>
           <Button color="inherit"><Link style={{color:'white'}} to="/login">Login</Link></Button>
           <Button color="inherit"><Link style={{color:'white'}} to="/register">Register</Link></Button>

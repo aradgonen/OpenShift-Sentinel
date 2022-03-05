@@ -1,10 +1,14 @@
 import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
-
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import Button from '@mui/material/Button';
 
 import { login } from "../store/actions/auth";
 
@@ -67,8 +71,9 @@ const Login = (props) => {
   }
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
+    <Box component="span"
+    sx={{ mx: '2px', transform: 'scale(0.8)' }}>
+      <Card>
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
@@ -101,12 +106,12 @@ const Login = (props) => {
           </div>
 
           <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
+            <Button className="btn btn-primary btn-block" disabled={loading}>
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
               <span>Login</span>
-            </button>
+            </Button>
           </div>
 
           {/* {message && (
@@ -118,8 +123,8 @@ const Login = (props) => {
           )} */}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
-      </div>
-    </div>
+      </Card>
+    </Box>
   );
 };
 

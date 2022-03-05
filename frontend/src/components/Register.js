@@ -5,8 +5,12 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import { register } from "../store/actions/auth";
+import Button from '@mui/material/Button';
 
 const required = (value) => {
   if (!value) {
@@ -94,8 +98,9 @@ const Register = () => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
+    <Box component="span"
+    sx={{ mx: '2px', transform: 'scale(0.8)' }}>
+      <Card>
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
           alt="profile-img"
@@ -142,7 +147,7 @@ const Register = () => {
               </div>
 
               <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
+                <Button className="btn btn-primary btn-block">Sign Up</Button>
               </div>
             </div>
           )}
@@ -156,8 +161,8 @@ const Register = () => {
           )} */}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
-      </div>
-    </div>
+      </Card>
+    </Box>
   );
 };
 

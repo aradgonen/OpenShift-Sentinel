@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import sentinel_logo from '../openshift_sentinel_logo_small.png'
+import sentinel_logo from '../../openshift_sentinel_logo_small.png'
 import { Link } from 'react-router-dom';
 
 export default function NavBar() {
@@ -21,8 +21,7 @@ export default function NavBar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-        {/* <MenuIcon /> */}
-            <img src={sentinel_logo}></img>
+          <img src={sentinel_logo}></img>
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link style={{color:'white'}} to="/">Home</Link>

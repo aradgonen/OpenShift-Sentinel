@@ -13,7 +13,8 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import { logout } from "./store/actions/auth";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/pagelayout/NavBar";
+import NavBar2 from "./components/pagelayout/Navbar2"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -46,6 +47,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <CssBaseline/>
             <NavBar/>
+            <NavBar2></NavBar2>
           <Routes>
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/home" element={<Home/>}/>

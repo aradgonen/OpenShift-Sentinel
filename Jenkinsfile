@@ -9,8 +9,8 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'npm install react-scripts'
         sh 'npm install'
+        sh 'npm install react-scripts'
       }
     }
 

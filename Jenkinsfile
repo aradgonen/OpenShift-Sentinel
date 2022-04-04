@@ -1,8 +1,8 @@
 pipeline {
   agent {
     docker {
-      image 'node:lts-buster-slim'
       args '-p 3000:3000'
+      image 'node:lts-bullseye-slim'
     }
 
   }
@@ -12,11 +12,13 @@ pipeline {
         sh 'npm install react-scripts'
       }
     }
+
     stage('Install') {
       steps {
         sh 'npm install'
       }
     }
+
     stage('Build') {
       steps {
         sh 'npm run build'

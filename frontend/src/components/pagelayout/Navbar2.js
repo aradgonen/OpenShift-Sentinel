@@ -11,13 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import sentinel_logo from '../../openshift_sentinel_logo_small.png'
 
 
 const baseUrl = "/"
 const pages = ['home', 'graphs'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['login', 'register'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -52,7 +52,6 @@ const ResponsiveAppBar = () => {
             <img src={sentinel_logo}></img>
         </Link>
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -114,7 +113,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                <Avatar alt="Anonymouse" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
               </IconButton>
             </Tooltip>
             <Menu
@@ -134,9 +133,11 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <Link to={baseUrl + setting}>
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>

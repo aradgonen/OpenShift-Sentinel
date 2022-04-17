@@ -5,7 +5,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
 import Login from "./components/Login";
+import Login2 from "./components/Login2";
 import Register from "./components/Register";
+import Register2 from "./components/Register2";
 import Home from "./components/Home";
 import Graphs from "./components/Graphs";
 import Profile from "./components/Profile";
@@ -46,14 +48,14 @@ const App = () => {
     <Router>
           <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <NavBar/>
-            <NavBar2></NavBar2>
+            {/* <NavBar/> */}
+            <NavBar2/>
           <Routes>
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/home" element={<Home/>}/>
             <Route exact path="/graphs" element={<Graphs/>}/>
-            <Route exact path="/login" element={<Login/>} />
-            <Route exact path="/register" element={<Register/>} />
+            <Route exact path="/login" element={<Login2/>} />
+            <Route exact path="/register" element={<Register2/>} />
             <Route exact path="/profile" element={<Profile/>} />
             <Route path="/user" element={<BoardUser/>} />
             <Route path="/mod" element={<BoardModerator/>} />

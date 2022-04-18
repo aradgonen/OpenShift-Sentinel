@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/root.js'
 // import {
@@ -14,7 +14,15 @@ import rootReducer from './store/reducers/root.js'
 //   gql
 // } from "@apollo/client";
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk)))
+const store = createStore(rootReducer,
+   compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()))
+// { auth: {
+//   isLoggedIn: false,
+//   user: "any"
+// },
+// theme: {
+//   mode: "dark"
+// }}
 
 // initialize graphql client
 // for more info go to https://www.apollographql.com/docs/react/get-started/

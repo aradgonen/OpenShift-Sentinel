@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
@@ -22,6 +22,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const App = () => {
+  connect()(App)
   const [prefersLightMode, setPreferedLightMode] =  useState(true);
   const themeMode = useSelector((state) => state.theme.mode);
 

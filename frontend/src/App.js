@@ -22,22 +22,26 @@ import CssBaseline from '@mui/material/CssBaseline';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const App = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark  )');
+  const [prefersLightMode, setPreferedLightMode] =  useState(true);
+  const themeMode = useSelector((state) => state.theme.mode);
 
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+          mode: themeMode,
         },
       }),
-    [prefersDarkMode],
+    [themeMode],
   );
+
+
 
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
 
   const { user: currentUser } = useSelector((state) => state.auth);
+  
   useEffect(() => {
     if (currentUser) {
       setShowModeratorBoard(currentUser.roles.includes("ROLE_MODERATOR"));
@@ -49,7 +53,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <CssBaseline/>
             {/* <NavBar/> */}
-            <NavBar2/>
+            <NavBar2 theme = {theme} themeHandler={setPreferedLightMode}/>
           <Routes>
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/home" element={<Home/>}/>

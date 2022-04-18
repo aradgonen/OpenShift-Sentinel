@@ -5,14 +5,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-//import Link from '@mui/material/Link';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/actions/auth';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // function Copyright(props) {
 //   return (
@@ -27,12 +28,25 @@ import { Link } from 'react-router-dom';
 //   );
 // }
 
-const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({theme}) {
+  createTheme(theme);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    dispatch(login(data.get('username'), data.get('password')))
+    .then(() => {
+      console.log("then")
+      navigate("/home");
+      //window.location.reload();
+    })
+    .catch(() => {
+      console.log("catch")
+      //TODO: add failed message
+    })
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -52,10 +66,10 @@ export default function SignUp() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <LockOpenIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            LOG IN
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -93,7 +107,7 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              LOG IN
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

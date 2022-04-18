@@ -1,4 +1,7 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,11 +11,13 @@ import Checkbox from '@mui/material/Checkbox';
 //import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
+import { register } from '../store/actions/auth';
 
 // function Copyright(props) {
 //   return (
@@ -27,19 +32,29 @@ import { Link } from 'react-router-dom';
 //   );
 // }
 
-const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({theme}) {
+  let navigate = useNavigate();
+  createTheme(theme);
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false)
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-        name: data.get('firstName'),
-        lastname: data.get('lastName'),
-        email: data.get('email'),
-        password: data.get('password'),
-    });
+    dispatch(register(data.get('username'), data.get('email'), data.get('password')))
+    .then(() => {
+      console.log("then")
+      navigate("/login");
+      //window.location.reload();
+    })
+    .catch(() => {
+      console.log("catch")
+      //TODO: add failed message
+    })
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,6 +95,16 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
               <Grid item xs={12}>

@@ -4,7 +4,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-  } from "../actions/types";
+  } from "../actions/auth-types";
   
   const user = JSON.parse(localStorage.getItem("user"));
   
@@ -27,6 +27,7 @@ import {
           isLoggedIn: false,
         };
       case LOGIN_SUCCESS:
+        console.log(user)
         return {
           ...state,
           isLoggedIn: true,

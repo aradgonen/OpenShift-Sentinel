@@ -12,6 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CHANGE_THEME, darkMode, lightMode } from '../../store/actions/theme-types';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import sentinel_logo from '../../openshift_sentinel_logo_small.png'
 
 
@@ -19,9 +23,12 @@ const baseUrl = "/"
 const pages = ['home', 'graphs'];
 const settings = ['login', 'register'];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({theme, themeHandler}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  const dispatch = useDispatch()
+  const themeMode = useSelector((state) => state.theme.mode)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -38,9 +45,15 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+  const handleChangeTheme = () => {
+    let changeMode = themeMode === lightMode ? darkMode : lightMode
+    dispatch({type:CHANGE_THEME, payload: changeMode})
+  }
+
+
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="false">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -109,7 +122,15 @@ const ResponsiveAppBar = () => {
             </Link>
             ))}
           </Box>
-
+          <Box>
+            <Tooltip title="change theme">
+            <IconButton sx={{ ml: 1 }} 
+            onClick={() => handleChangeTheme()} 
+            color="inherit">
+              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+            </Tooltip>
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

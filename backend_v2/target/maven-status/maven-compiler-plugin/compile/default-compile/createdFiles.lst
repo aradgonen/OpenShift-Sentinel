@@ -12,6 +12,7 @@ com/cyber/sentinel/backend/security/jwt/AuthTokenFilter.class
 com/cyber/sentinel/backend/security/WebSecurityConfig.class
 com/cyber/sentinel/backend/security/services/UserDetailsServiceImpl.class
 com/cyber/sentinel/backend/payload/request/LoginRequest.class
+com/cyber/sentinel/backend/controller/RestProxyController.class
 com/cyber/sentinel/backend/payload/response/MessageResponse.class
 com/cyber/sentinel/backend/model/Role.class
 com/cyber/sentinel/backend/model/ERole.class

@@ -20,7 +20,7 @@ import sentinel_logo from '../../openshift_sentinel_logo_small.png'
 
 
 const baseUrl = "/"
-const pages = ['home', 'graphs'];
+const pages = ['home', 'graphs','soar'];
 const settings = ['login', 'register'];
 
 const ResponsiveAppBar = ({theme, themeHandler}) => {

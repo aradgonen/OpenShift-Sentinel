@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,7 +21,9 @@ import sentinel_logo from '../../openshift_sentinel_logo_small.png'
 
 const baseUrl = "/"
 const pages = ['home', 'graphs'];
-const settings = ['login', 'register'];
+let settings = [];
+let baseSettings = []
+let userSettings = []
 
 const ResponsiveAppBar = ({theme, themeHandler}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -29,6 +31,23 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
   
   const dispatch = useDispatch()
   const themeMode = useSelector((state) => state.theme.mode)
+  const username = useSelector((state) => state.auth.user)
+
+
+  useEffect(() => {
+    console.log('user effect')
+    if (username) {
+      userSettings = ['logout']
+    } else {
+      userSettings = ['login', 'register']
+    }
+
+    settings = configureSettings() 
+  },[username])
+  
+  const configureSettings = () => {
+    return baseSettings.concat(userSettings)
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

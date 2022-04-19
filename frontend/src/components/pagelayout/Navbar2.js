@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,6 +17,7 @@ import { CHANGE_THEME, darkMode, lightMode } from '../../store/actions/theme-typ
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import sentinel_logo from '../../openshift_sentinel_logo_small.png'
+import DraggableDialog from '../ui/draggableDialog';
 
 
 const baseUrl = "/"
@@ -28,6 +29,7 @@ let userSettings = []
 const ResponsiveAppBar = ({theme, themeHandler}) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [dialogShow, setDialogShow] = useState(false)
   
   const dispatch = useDispatch()
   const themeMode = useSelector((state) => state.theme.mode)
@@ -63,6 +65,20 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogOutClick = () => {
+    handleCloseUserMenu()
+    showDialogPage()
+    console.log(dialogShow)
+  }
+
+  const showDialogPage = () => {
+    setDialogShow(true)
+  }
+
+  const hideDialogPage = () => {
+    setDialogShow(false)
+  }
 
   const handleChangeTheme = () => {
     let changeMode = themeMode === lightMode ? darkMode : lightMode
@@ -172,13 +188,28 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <Link to={baseUrl + setting}>
+              {settings.map((setting) => {
+                if(setting === 'logout') {
+                  return <Link to=''>
+                    <MenuItem key={setting} onClick={handleLogOutClick}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                    <DraggableDialog
+                      cancelButtonText="Cancel"
+                      submitButtonText="LogOut"
+                      title="Wait!"
+                      text="Are you sure you want to logout?"
+                      show={dialogShow}
+                      //dialogShowFunction={setDialogShow}
+                      functionOnSubmit={""}></DraggableDialog>
+                  </Link>
+                }
+                return <Link to={baseUrl + setting}>
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                    <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 </Link>
-              ))}
+              })}
             </Menu>
           </Box>
         </Toolbar>

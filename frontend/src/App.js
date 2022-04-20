@@ -9,6 +9,8 @@ import Login2 from "./components/Login2";
 import Soar from "./components/Soar";
 import Register from "./components/Register";
 import Register2 from "./components/Register2";
+import Logout from "./components/Logout"
+import Compliance from "./components/Compliance";
 import Home from "./components/Home";
 import Graphs from "./components/Graphs";
 import Profile from "./components/Profile";
@@ -60,8 +62,10 @@ const App = () => {
             <Route exact path="/" element={<Home/>}/>
             <Route exact path="/home" element={<Home/>}/>
             <Route exact path="/graphs" element={<Graphs/>}/>
+            <Route exact path="/compliance" element={<Compliance/>}/>
             <Route exact path="/login" element={<Login2/>} />
             <Route exact path="/register" element={<Register2/>} />
+            <Route exact path="/logout" element={<Logout/>} />
             <Route exact path="/profile" element={<Profile/>} />
             <Route path="/user" element={<BoardUser/>} />
             <Route path="/mod" element={<BoardModerator/>} />

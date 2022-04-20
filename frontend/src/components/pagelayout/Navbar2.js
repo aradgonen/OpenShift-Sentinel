@@ -21,7 +21,8 @@ import DraggableDialog from '../ui/draggableDialog';
 
 
 const baseUrl = "/"
-const pages = ['home', 'graphs', 'compliance'];
+
+const pages = ['home', 'graphs', 'soar','compliance'];
 let settings = [];
 let baseSettings = []
 let userSettings = []

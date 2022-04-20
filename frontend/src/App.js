@@ -6,6 +6,7 @@ import "./App.css";
 
 import Login from "./components/Login";
 import Login2 from "./components/Login2";
+import Soar from "./components/Soar";
 import Register from "./components/Register";
 import Register2 from "./components/Register2";
 import Logout from "./components/Logout"
@@ -69,6 +70,7 @@ const App = () => {
             <Route path="/user" element={<BoardUser/>} />
             <Route path="/mod" element={<BoardModerator/>} />
             <Route path="/admin" element={<BoardAdmin/>} />
+            <Route path="/soar" element={<Soar/>}/>
           </Routes>
           </ThemeProvider>
     </Router>

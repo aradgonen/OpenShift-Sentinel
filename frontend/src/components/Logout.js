@@ -6,10 +6,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useDispatch } from 'react-redux';
-import { login } from '../store/actions/auth';
+import {logout} from '../store/actions/auth';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
+import BlockIcon from '@mui/icons-material/Block';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -29,29 +29,22 @@ import { Link, useNavigate } from 'react-router-dom';
 // }
 
 
-export default function SignUp({theme}) {
+export default function Logout({theme}) {
   createTheme(theme);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    dispatch(login(data.get('username'), data.get('password')))
-    .then(() => {
-      console.log("then")
-      navigate("/home");
-      //window.location.reload();
-    })
-    .catch(() => {
-      console.log("catch")
-      //TODO: add failed message
-    })
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    dispatch(logout())
+    navigate("/home");
+    //window.location.reload();
   };
+
+  const handleCancel = (event) => {
+      event.preventDefault()
+      navigate(-1)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,56 +59,35 @@ export default function SignUp({theme}) {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOpenIcon />
+            <BlockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            LOG IN
+            LOG OUT
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3, display: 'inline'}} >
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid> */}
-            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 1, mb: 1 }}
+              onClick={handleCancel}
+            >
+              Stay Connected
+            </Button>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              LOG IN
+              LOG OUT
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to= '/register'>
-                  Don't have an account? Register
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 5 }} /> */}

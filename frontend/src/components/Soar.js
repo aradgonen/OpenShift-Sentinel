@@ -1,29 +1,86 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Selector from './Selector';
+// import Selector from './Selector';
+import { fetchNamespaces,fetchPodsByNamespcae } from '../store/actions/data'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import DataService from '../services/data.service';
+
 const steps = ['Select Namespace', 'Select Pod', 'Kill Pod'];
 
-function _renderStepContent(step) {
+function _renderStepContent(step,data,handleNamespaceChange,handlePodChange,namespace,pod) {
     switch (step) {
       case 0:
-        return <Selector data="Namespace" values={steps}/>;
+        return (<Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">NameSpace</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={namespace}
+            label={"Namespace"}
+            onChange={handleNamespaceChange}
+          >
+          {((data.namespaces.namespaces)?(data.namespaces.namespaces):(steps)).map(val => {
+                 return <MenuItem key={val} value={val}>{val}</MenuItem>
+          })}
+          </Select>
+        </FormControl>
+      </Box>)
       case 1:
-        return <Selector data="Pod" values={steps}/>;
-      case 2:
-        return <Selector data="Kill" values={steps}/>;
+        return (<Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Pod</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={pod}
+                label={"Pod"}
+                onChange={handlePodChange}
+              >
+              {((data.pods[namespace])?(data.pods[namespace]):(["No Pods"])).map(val => {
+                     return <MenuItem key={val} value={val}>{val}</MenuItem>
+              })}
+              </Select>
+            </FormControl>
+          </Box>)
+    //   case 2:
+    //     return <Selector data="Kill" values={steps}/>;
       default:
-        return <div>Not Found</div>;
+        return <div>{pod}</div>;
     }
   }
 
 export default function Soar() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [selectedNamespace, setSelectedNamespace] = useState("");
+  const [completed, setCompleted] = useState({});
+  const namespaces = useSelector((state) => state.data)
+  const pods = useSelector((state) => state.data)
+  const dispatch = useDispatch();
+  const [namespace, setNamespace] = React.useState('default');
+  const [pod, setPod] = React.useState('SelectPod');
+  const handleNamespaceChange = (event) => {
+    setNamespace(event.target.value);
+  };
+  const handlePodChange = (event) => {
+      setPod(event.target.value);
+  }
+  useEffect(() => {
+      dispatch(fetchNamespaces());
+  },[dispatch])
+  useEffect(()=> {
+      dispatch(fetchPodsByNamespcae());
+  },[namespace]);
 
   const totalSteps = () => {
     return steps.length;
@@ -63,7 +120,8 @@ export default function Soar() {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
-    handleNext();
+    DataService.openshift_delete_pod(namespace,pod)
+    // handleNext();
   };
 
   const handleReset = () => {
@@ -96,7 +154,7 @@ export default function Soar() {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            {_renderStepContent(activeStep)}
+            {_renderStepContent(activeStep,namespaces,handleNamespaceChange,handlePodChange,namespace,pod)}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"
@@ -106,7 +164,6 @@ export default function Soar() {
               >
                 Back
               </Button>
-
               <Box sx={{ flex: '1 1 auto' }}/>
               <Button onClick={handleNext} sx={{ mr: 1 }}>
                 Next

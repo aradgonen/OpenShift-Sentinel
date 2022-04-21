@@ -1,6 +1,7 @@
 com\cyber\sentinel\backend\security\jwt\AuthTokenFilter.class
 com\cyber\sentinel\backend\repository\RoleRepository.class
 com\cyber\sentinel\backend\security\jwt\JwtUtils.class
+com\cyber\sentinel\backend\controller\CompliancGitController.class
 com\cyber\sentinel\backend\payload\response\MessageResponse.class
 com\cyber\sentinel\backend\payload\response\JwtResponse.class
 com\cyber\sentinel\backend\controller\UserController.class

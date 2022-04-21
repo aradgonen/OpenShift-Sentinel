@@ -1,0 +1,44 @@
+version: '2'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  backend:
+    build:
+      context: ./backend_v2/
+      dockerfile: ./Dockerfile
+    hostname: backend
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - '8080:8080'
+  openshift-api-fetcher:
+    build:
+      context: ./openshift-api-fetcher/
+      dockerfile: ./Dockerfile
+    hostname: openshift-api-fetcher
+    depends_on:
+      - backend
+    ports:
+      - '5555:5555'
+  front-end:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    hostname: font-end
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
+volumes:
+  db:
+    driver: local

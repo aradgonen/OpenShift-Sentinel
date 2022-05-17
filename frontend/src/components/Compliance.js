@@ -13,40 +13,58 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Compliance ({theme}) {
 
-    const policyNameField = 'policyName'
-    const policyPathField = 'path'
 
-    let [tableData, setTableData]  = useState({});  
+    let [tableData, setTableData]  = useState([]);  
+    let [currentPolicy, setCurrentPolicy]  = useState('');  
     useEffect(async () => {
-        let tempTableData = {};
+        let tempTableData = [];
         let data = await PolicyService.getAllPolicies()
         data.data["yaml-files"].map((file, index) => {
-            console.log(index)
-            tempTableData.push({policyNameField: file["file"], policyPathField: file["path"]})
-            
+            tempTableData.push({policyName: file["file"], path: file["path"], "repo": file["repo"]})
         })
         setTableData([...tempTableData]);
-        console.log(tableData)
     }, [])
 
 
     let policiesTable = <MaterialTable
     columns={[
       { title: 'Policy', field: 'policyName' },
-      { title: 'Path', field: 'path', hidden: true }
+      { title: 'Path', field: 'path', hidden: true },
+      { title: 'Repo', field: 'repo', hidden: true }
     ]}
     data={tableData}
     title="Polices"
+    detailPanel={rowData => {
+        console.log(rowData)
+        return (
+                <Grid container spacing={1} >
+                <Grid item xs={0.5}></Grid>
+                <Grid item xs={5}>
+                <Item>{rowData["path"]}</Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>{rowData["repo"]}</Item>
+                </Grid>
+                <Grid item xs={0.5}></Grid>
+            </Grid>
+        )
+      }}
+    onRowClick={(event, rowData, detailPanel ) => detailPanel(rowData)}
   />
+
+  const onPolicyRowHandle = (policy) => {
+      setCurrentPolicy(policy)
+      console.log(currentPolicy)
+  }
 
     return(
         <Grid container spacing={2} >
             <Grid item xs={0.5}></Grid>
-            <Grid item xs={3.5}>
+            <Grid item xs={5}>
                 {policiesTable}
             </Grid>
-            <Grid item xs={7.5}>
-                <Item>xs=7.5</Item>
+            <Grid item xs={6}>
+                <Item>xs=6</Item>
             </Grid>
             <Grid item xs={0.5}></Grid>
         </Grid>

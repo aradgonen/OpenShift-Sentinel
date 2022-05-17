@@ -20,7 +20,7 @@ def git_yaml_files():
             if file['path'].endswith('.yaml'):
                 file_array = file['path'].split('/')
                 file_name = file_array[len(file_array) - 1]
-                files_res.append({"file": file_name, "path": file['path']})
+                files_res.append({"file": file_name, "path": file['path'], "repo": git_repo})
         return {'yaml-files': files_res}
     return tree
 

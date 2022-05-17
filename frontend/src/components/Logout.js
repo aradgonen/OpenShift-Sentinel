@@ -75,7 +75,7 @@ export default function Logout({theme}) {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 1, mb: 1 }}
+              sx={{ mt: 3, mb: 2 }}
               onClick={handleCancel}
             >
               Stay Connected

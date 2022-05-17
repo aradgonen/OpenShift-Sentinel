@@ -22,4 +22,4 @@ def get_openshift_pods():
 def delete_pod_by_namespace(namespace,pod):
     return requests.request("DELETE",namespaces_url+"/"+namespace+"/pods/"+pod, headers=headers, data=payload, verify=False).json()
 if __name__ == '__main__':
-    api.run()
+    api.run(port=5000)

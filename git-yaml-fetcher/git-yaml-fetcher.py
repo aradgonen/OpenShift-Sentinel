@@ -28,7 +28,7 @@ def git_yaml_files():
 @api.route(base_url + '/yaml/', methods=['GET'])
 def git_yaml_file():
     args_file = request.args.get("file")
-    if args_file is not '':
+    if args_file != '':
         print("****" + args_file)
         file = requests.get(git_repo_url + '/' + args_file)
         return {'file': args_file, 'content': file.content.decode('utf-8')}

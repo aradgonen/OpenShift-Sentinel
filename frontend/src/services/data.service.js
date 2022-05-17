@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.1.228:8080/api/proxy/";
+const API_URL = "http://localhost:8080/api/proxy/";
 
 const openshift_list_namespaces = () => {
   return axios.get(API_URL + "openshift/soar/namespaces");

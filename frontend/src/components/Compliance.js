@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import MaterialTable from 'material-table'
 import { Container, Grid, Paper, styled } from '@mui/material';
 import PolicyService from '../services/policy.service'
@@ -13,10 +13,20 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Compliance ({theme}) {
 
-    let tableData = [];
+    const policyNameField = 'policyName'
+    const policyPathField = 'path'
+
+    let [tableData, setTableData]  = useState({});  
     useEffect(async () => {
+        let tempTableData = {};
         let data = await PolicyService.getAllPolicies()
-        console.log(data)
+        data.data["yaml-files"].map((file, index) => {
+            console.log(index)
+            tempTableData.push({policyNameField: file["file"], policyPathField: file["path"]})
+            
+        })
+        setTableData([...tempTableData]);
+        console.log(tableData)
     }, [])
 
 

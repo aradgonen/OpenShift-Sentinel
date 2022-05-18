@@ -47,5 +47,9 @@ public class RestProxyController {
     public void deletePod(@PathVariable("namespace") String namespace, @PathVariable("pod") String pod) {
         restTemplate.delete(baseUrl+"api/openshift/pods/"+namespace+"/"+pod);
     }
+    @RequestMapping(value = "/audit/log/all")
+    public void getAuditLogs() {
+        restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/all",String.class);
+    }
     //add more
 }

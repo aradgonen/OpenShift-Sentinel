@@ -64,7 +64,7 @@ export default function Compliance ({theme}) {
                 {policiesTable}
             </Grid>
             <Grid item xs={6}>
-                <Item>xs=6</Item>
+                <Item>6</Item>
             </Grid>
             <Grid item xs={0.5}></Grid>
         </Grid>

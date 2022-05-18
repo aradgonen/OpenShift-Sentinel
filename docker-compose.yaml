@@ -11,6 +11,14 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+  mongodb:
+    image: mongo
+    restart: always
+    hostname: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
   backend:
     build:
       context: ./backend_v2/
@@ -30,6 +38,13 @@ services:
       - backend
     ports:
       - '5555:5555'
+  openshift-audit-todb:
+    build:
+      context: ./openshift-audit-todb/
+      dockerfile: ./Dockerfile
+    hostname: openshift-audit-todb
+    depends_on:
+      - mongodb
   front-end:
     build:
       context: ./frontend/
@@ -41,4 +56,6 @@ services:
       - '80:80'
 volumes:
   db:
+    driver: local
+  mongodb:
     driver: local

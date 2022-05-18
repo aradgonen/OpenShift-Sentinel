@@ -11,7 +11,7 @@ export default function YamlEditor({theme, yaml}) {
         <AceEditor
             placeholder="Placeholder Text"
             mode="yaml"
-            theme={`${theme}`}
+            theme="github"
             name="editor"
             fontSize={14}
             showPrintMargin={true}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import MaterialTable from 'material-table'
-import { Container, Grid, Paper, styled } from '@mui/material';
+import { Container, Grid, Paper, styled, Button } from '@mui/material';
 import PolicyService from '../services/policy.service'
 import YamlEditor from './ui/YamlEditor';
 
@@ -35,6 +35,9 @@ export default function Compliance ({theme}) {
         }
     }, [currentPolicy])
 
+    const policyChangeHandler = (path='') => {
+        setCurrentPolicy(path)
+    }
 
     let policiesTable = <MaterialTable
     columns={[
@@ -45,19 +48,16 @@ export default function Compliance ({theme}) {
     data={tableData}
     title="Polices"
     detailPanel={rowData => {
-        console.log(rowData)
-        setCurrentPolicy(rowData["path"])
+        policyChangeHandler(rowData["path"])
         return (
-                <Grid container spacing={1} >
-                <Grid item xs={0.5}></Grid>
+                <Grid container spacing={1}>
                 <Grid item xs={5}>
-                <Item>{rowData["path"]}</Item>
+                    <Item>{rowData["path"]}</Item>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={5}>
                     <Item>{rowData["repo"]}</Item>
                 </Grid>
-                <Grid item xs={0.5}></Grid>
-            </Grid>
+                </Grid>
         )
       }}
     onRowClick={(event, rowData, detailPanel ) => detailPanel(rowData)}

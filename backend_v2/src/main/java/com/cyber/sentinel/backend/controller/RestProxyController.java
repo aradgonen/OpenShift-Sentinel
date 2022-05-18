@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/proxy")
 public class RestProxyController {
-    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5555/";
+//    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5555/";
+    String baseUrl = "http://127.0.0.1:5000/";
     RestTemplate restTemplate = new RestTemplate();
 
     //    @PreAuthorize("hasRole('ADMIN')")
@@ -48,8 +49,9 @@ public class RestProxyController {
         restTemplate.delete(baseUrl+"api/openshift/pods/"+namespace+"/"+pod);
     }
     @RequestMapping(value = "/audit/log/all")
-    public void getAuditLogs() {
-        restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/all",String.class);
+    public String getAuditLogs() {
+        String raw_data = restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/all",String.class);
+        return raw_data;
     }
     //add more
 }

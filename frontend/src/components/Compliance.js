@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import MaterialTable from 'material-table'
 import { Container, Grid, Paper, styled } from '@mui/material';
 import PolicyService from '../services/policy.service'
+import YamlEditor from './ui/YamlEditor';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -36,6 +37,7 @@ export default function Compliance ({theme}) {
     title="Polices"
     detailPanel={rowData => {
         console.log(rowData)
+        setCurrentPolicy(rowData["path"])
         return (
                 <Grid container spacing={1} >
                 <Grid item xs={0.5}></Grid>
@@ -64,7 +66,7 @@ export default function Compliance ({theme}) {
                 {policiesTable}
             </Grid>
             <Grid item xs={6}>
-                <Item>6</Item>
+                <YamlEditor yaml={currentPolicy}/>
             </Grid>
             <Grid item xs={0.5}></Grid>
         </Grid>

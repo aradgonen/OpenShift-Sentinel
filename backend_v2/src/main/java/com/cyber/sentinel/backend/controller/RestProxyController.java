@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/proxy")
 public class RestProxyController {
-    String baseUrl = "http://openshift-api-fetcher:5555/";
+    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5555/";
     RestTemplate restTemplate = new RestTemplate();
 
     //    @PreAuthorize("hasRole('ADMIN')")

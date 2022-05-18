@@ -1,6 +1,7 @@
 import json
 import pymongo
-myclient = pymongo.MongoClient("mongodb://mongodb:27017/")
+import os
+myclient = pymongo.MongoClient("mongodb://"+os.environ.get("MONGODB_URL")+":27017/")
 mydb = myclient["mydatabase"]
 mycol = mydb["audit"]
 

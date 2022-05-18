@@ -16,7 +16,9 @@ export default function Compliance ({theme}) {
 
 
     let [tableData, setTableData]  = useState([]);  
-    let [currentPolicy, setCurrentPolicy]  = useState('');  
+    let [currentPolicy, setCurrentPolicy]  = useState('');
+    let [currentPolicyContent, setcurrentPolicyContent]  = useState('defualt policy content');
+
     useEffect(async () => {
         let tempTableData = [];
         let data = await PolicyService.getAllPolicies()
@@ -25,6 +27,13 @@ export default function Compliance ({theme}) {
         })
         setTableData([...tempTableData]);
     }, [])
+
+    useEffect(async () => {
+        if(currentPolicy !== '') {
+            let data = await PolicyService.getPolicyContent(currentPolicy)
+            setcurrentPolicyContent(data["data"]["content"])
+        }
+    }, [currentPolicy])
 
 
     let policiesTable = <MaterialTable
@@ -66,7 +75,7 @@ export default function Compliance ({theme}) {
                 {policiesTable}
             </Grid>
             <Grid item xs={6}>
-                <YamlEditor yaml={currentPolicy}/>
+                <YamlEditor yaml={currentPolicyContent}/>
             </Grid>
             <Grid item xs={0.5}></Grid>
         </Grid>

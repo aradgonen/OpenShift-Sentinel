@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/proxy")
 public class RestProxyController {
-    String baseUrl = "http://127.0.0.1:5000/";
+    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5555/";
     RestTemplate restTemplate = new RestTemplate();
 
     //    @PreAuthorize("hasRole('ADMIN')")
@@ -23,7 +23,7 @@ public class RestProxyController {
         JSONObject namespaces = new JSONObject();
         ArrayList namespaceList = (ArrayList) rawJsonResponse.toMap().get("items");
         for (Object namespace: namespaceList
-             ) {
+        ) {
             String curName = ((HashMap)((HashMap) namespace).get("metadata")).get("name").toString();
             namespaces.append("namespaces",curName);
         }

@@ -23,7 +23,7 @@ public class ComplianceGitController {
         return jsonObject.toString();
     }
 
-    @GetMapping("/files-")
+    @GetMapping("/files")
     public String gitYamlFile(@RequestParam String filepath) {
         JSONObject jsonObject = new JSONObject(restTemplate.getForObject(baseUrl + "/api/yaml/?file=" + filepath, String.class));
         return jsonObject.toString();

@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/proxy")
 public class RestProxyController {
+//    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5555/";
     String baseUrl = "http://127.0.0.1:5000/";
     RestTemplate restTemplate = new RestTemplate();
 
@@ -23,7 +24,7 @@ public class RestProxyController {
         JSONObject namespaces = new JSONObject();
         ArrayList namespaceList = (ArrayList) rawJsonResponse.toMap().get("items");
         for (Object namespace: namespaceList
-             ) {
+        ) {
             String curName = ((HashMap)((HashMap) namespace).get("metadata")).get("name").toString();
             namespaces.append("namespaces",curName);
         }
@@ -46,6 +47,11 @@ public class RestProxyController {
     @RequestMapping(value = "/openshift/soar/pods/{namespace}/{pod}", method = RequestMethod.DELETE)
     public void deletePod(@PathVariable("namespace") String namespace, @PathVariable("pod") String pod) {
         restTemplate.delete(baseUrl+"api/openshift/pods/"+namespace+"/"+pod);
+    }
+    @RequestMapping(value = "/audit/log/all")
+    public String getAuditLogs() {
+        String raw_data = restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/all",String.class);
+        return raw_data;
     }
     //add more
 }

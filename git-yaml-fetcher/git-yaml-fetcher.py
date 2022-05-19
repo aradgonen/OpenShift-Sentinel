@@ -10,19 +10,27 @@ base_url = "/api"
 api = Flask(__name__)
 
 
+
+class remote_files:
+  def __init__(self):
+    self.files = {}
+
 @api.route(base_url + '/yaml/all', methods=['GET'])
 def git_yaml_files():
-    tree = requests.get(git_tree_url)
-    if tree.status_code == 200:
-        files_res = []
-        files = tree.json()['tree']
-        for file in files:
-            if file['path'].endswith('.yaml'):
-                file_array = file['path'].split('/')
-                file_name = file_array[len(file_array) - 1]
-                files_res.append({"file": file_name, "path": file['path'], "repo": git_repo})
-        return {'yaml-files': files_res}
-    return tree
+    if not bool(remote_files_obj.files):
+        tree = requests.get(git_tree_url)
+        if tree.status_code == 200:
+            files_res = []
+            files = tree.json()['tree']
+            for file in files:
+                if file['path'].endswith('.yaml'):
+                    file_array = file['path'].split('/')
+                    file_name = file_array[len(file_array) - 1]
+                    files_res.append({"file": file_name, "path": file['path'], "repo": git_repo})
+            remote_files_obj.files = files_res
+
+    return {'yaml-files': remote_files_obj.files}
+    #return tree
 
 
 @api.route(base_url + '/yaml/', methods=['GET'])
@@ -36,4 +44,5 @@ def git_yaml_file():
 
 
 if __name__ == '__main__':
+    remote_files_obj = remote_files()
     api.run(port=5002)

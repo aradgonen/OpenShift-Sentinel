@@ -1,0 +1,74 @@
+version: '2'
+services:
+  db:
+    build:
+      context: ./sentinel-postgres/
+      dockerfile: ./Dockerfile
+    restart: always
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=mydb  
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  mongodb:
+    image: mongo
+    restart: always
+    hostname: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+  backend:
+    build:
+      context: ./backend_v2/
+      dockerfile: ./Dockerfile
+    hostname: backend
+    environment:
+      - DB_URL=db
+      - MONGODB_URL=mongodb
+      - PROXY_URL=openshift-api-fetcher
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - '8080:8080'
+  openshift-api-fetcher:
+    build:
+      context: ./openshift-api-fetcher/
+      dockerfile: ./Dockerfile
+    hostname: openshift-api-fetcher
+    environment:
+      - OPENSHIFT_TOKEN=eyJhbGciOiJSUzI1NiIsImtpZCI6ImZ5NzBxYl9YbzBGdk85aDVwbkhoYXE2MmxpcHo0bmF0VkVpbXJTMUh3QjAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6InNvYXItdG9rZW4tdG9rZW4tZzhqcXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoic29hci10b2tlbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjI3MGEyODAyLTBhNzAtNDFlYi05ZTE5LTdjMjhhMWNmM2QwNCIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OnNvYXItdG9rZW4ifQ.Q3h5fd3eGVnz1bZFZSbpdqLms-IrcgCT8ehWpfut6h8OJN_ecPaOYTzA7m33A-DcOOyfUfW5axX64SZPwr3kiPxRQFZuX8fELqIMSJFW-cBPIbjqfbC4dHD2i97hC6J-eSPMRYPDjdB1wTkS8VGZsPsRmsu7g0srshpUiVA9VtY6SyCNQVS2McEVNVTipgpElhi4bfwSgTdiDDjTt4PpgYKqfh8W67usLxsWcSo2WX0qsavLKFx6y_7jidUJuYwysfffDurX32GDruwEowjWmadIlW-d6LotrLJOVuTIoF2qE04FOHVM4A1xdoy-Fvc4Fpsig0IXKORw7qEEgEIokkR84c_5YxKNvEaft5Q9SEEPGxg71BjolLVzPpMfaNTiesfRWWebwX6DHyqEBqH1zz3FzfTGW-oDylh-JnQ_1KcuGuoqV2vRfD-2ut6esYwb0YMSfxD5Ua9b9IveM9vjIprx_czXT-JkfLRRB8JE_wXgkWOuz_DjeaVdVDgmrVP6ysjivD6G4j3-vSJSJ-jmvcWTklQC1BPCeP-0ONIp-agCjXO8TAK7ZqEon0NPeKOC8-7kF3NP8k_gYTYkuYFnVtz9POE8eRf7KaYs8iUoK0HDFADSDq2JZ7fFvQOWRsbpFUsXEK5J_z4UbjfF6oKpypo2HWlq5Cssy6Pk-E8lEcw
+    depends_on:
+      - backend
+    ports:
+      - '5555:5555'
+  openshift-audit-todb:
+    build:
+      context: ./openshift-audit-todb/
+      dockerfile: ./Dockerfile
+    hostname: openshift-audit-todb
+    environment:
+      - MONGODB_URL=mongodb
+    depends_on:
+      - mongodb
+  front-end:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    hostname: font-end
+    environment:
+      - BACKEND=backend
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
+volumes:
+  db:
+    driver: local
+  mongodb:
+    driver: local

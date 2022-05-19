@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import MaterialTable from 'material-table'
-import { Container, Grid, Paper, styled } from '@mui/material';
+import { Container, Grid, Paper, styled, Button } from '@mui/material';
 import PolicyService from '../services/policy.service'
+import YamlEditor from './ui/YamlEditor';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -13,30 +14,68 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Compliance ({theme}) {
 
-    let tableData = [];
+
+    let [tableData, setTableData]  = useState([]);  
+    let [currentPolicy, setCurrentPolicy]  = useState('');
+    let [currentPolicyContent, setcurrentPolicyContent]  = useState('defualt policy content');
+
     useEffect(async () => {
+        let tempTableData = [];
         let data = await PolicyService.getAllPolicies()
-        console.log(data)
+        data.data["yaml-files"].map((file, index) => {
+            tempTableData.push({policyName: file["file"], path: file["path"], "repo": file["repo"]})
+        })
+        setTableData([...tempTableData]);
     }, [])
 
+    useEffect(async () => {
+        if(currentPolicy !== '') {
+            let data = await PolicyService.getPolicyContent(currentPolicy)
+            setcurrentPolicyContent(data["data"]["content"])
+        }
+    }, [currentPolicy])
+
+    const policyChangeHandler = (path='') => {
+        setCurrentPolicy(path)
+    }
 
     let policiesTable = <MaterialTable
     columns={[
       { title: 'Policy', field: 'policyName' },
-      { title: 'Path', field: 'path', hidden: true }
+      { title: 'Path', field: 'path', hidden: true },
+      { title: 'Repo', field: 'repo', hidden: true }
     ]}
     data={tableData}
     title="Polices"
+    detailPanel={rowData => {
+        policyChangeHandler(rowData["path"])
+        return (
+                <Grid container spacing={1}>
+                <Grid item xs={5}>
+                    <Item>{rowData["path"]}</Item>
+                </Grid>
+                <Grid item xs={5}>
+                    <Item>{rowData["repo"]}</Item>
+                </Grid>
+                </Grid>
+        )
+      }}
+    onRowClick={(event, rowData, detailPanel ) => detailPanel(rowData)}
   />
+
+  const onPolicyRowHandle = (policy) => {
+      setCurrentPolicy(policy)
+      console.log(currentPolicy)
+  }
 
     return(
         <Grid container spacing={2} >
             <Grid item xs={0.5}></Grid>
-            <Grid item xs={3.5}>
+            <Grid item xs={5}>
                 {policiesTable}
             </Grid>
-            <Grid item xs={7.5}>
-                <Item>xs=7.5</Item>
+            <Grid item xs={6}>
+                <YamlEditor yaml={currentPolicyContent}/>
             </Grid>
             <Grid item xs={0.5}></Grid>
         </Grid>

@@ -13,7 +13,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/compliance")
-public class CompliancGitController {
+public class ComplianceGitController {
     String baseUrl = "http://localhost:5002";
     RestTemplate restTemplate = new RestTemplate();
 

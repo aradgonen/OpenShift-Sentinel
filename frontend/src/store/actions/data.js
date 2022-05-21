@@ -1,4 +1,4 @@
-import {fetchDataRequest,fetchDataSuccess,fetchDataError, fetchPodsDataSuccess,fetchPodsDataRequest,fetchPodsDataError} from "./data-actions";
+import {fetchDataRequest,fetchDataSuccess,fetchDataError, fetchPodsDataSuccess,fetchPodsDataRequest,fetchPodsDataError, fetchAuditDataSuccess, fetchAudotDataError, fetchAuditDataRequest} from "./data-actions";
 
 import DataService from "../../services/data.service";
 export function fetchNamespaces(){
@@ -20,6 +20,17 @@ export function fetchPodsByNamespcae(){
     })
     .catch(error => {
       dispatch(fetchPodsDataError(error))
+    })
+  }
+}
+export function fetchAllAuditLog(){
+  return dispatch => {
+    dispatch(fetchAuditDataRequest());
+    DataService.audit_all().then(response => {
+      dispatch(fetchAuditDataSuccess(response.data));
+    })
+    .catch(error => {
+      dispatch(fetchAudotDataError(error))
     })
   }
 }

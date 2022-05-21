@@ -3,7 +3,7 @@ import requests
 import os
 import pymongo
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = pymongo.MongoClient("mongodb://"+os.environ.get("MONGODB_URL")+":27017/")
 mydb = myclient["mydatabase"]
 mycol = mydb["audit"]
 namespaces_url = "https://api.projocp.cloudlet-dev.com:6443/api/v1/namespaces"
@@ -29,6 +29,7 @@ def delete_pod_by_namespace(namespace,pod):
 
 @api.route('/api/mongodb/audit/log/all', methods=['GET'])
 def get_audit_logs_all():
+    audit_dict = {}
     data = []
     # for document in mycol.find():
     #     print(str(document))
@@ -37,7 +38,11 @@ def get_audit_logs_all():
     for user in users:
         for document in mycol.find({"user.username":user}):
             data.append(document)
-    return str(data)
+            if user in audit_dict:
+                audit_dict[user] += 1
+            else:
+                audit_dict[user] = 1
+    return audit_dict
 
 def get_audit_users():
     data = []

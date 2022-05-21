@@ -8,7 +8,7 @@ import MaterialTable from 'material-table'
 
 
 const Graphs = (props) => {
-
+  
   return (
     <div>
       <SimpleChart></SimpleChart>

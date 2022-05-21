@@ -4,7 +4,10 @@ import {
     FETCH_NAMESPACES_ERROR,
     FETCH_PODS_PENDING,
     FETCH_PODS_SUCCESS,
-    FETCH_PODS_ERROR
+    FETCH_PODS_ERROR,
+    FETCH_AUDITLOG_PENDING,
+    FETCH_AUDITLOG_SUCCESS,
+    FETCH_AUDITLOG_ERROR
   } from "./data-types";
   
   export function fetchDataRequest() {
@@ -45,3 +48,23 @@ import {
       payload: { error }
     };
   }
+  export function fetchAuditDataRequest() {
+    return {
+      type: FETCH_AUDITLOG_PENDING
+    };
+  }
+  
+  export function fetchAuditDataSuccess(item) {
+    return {
+      type: FETCH_AUDITLOG_SUCCESS,
+      item
+    };
+  }
+  
+  export function fetchAudotDataError(error) {
+    return {
+      type: FETCH_AUDITLOG_ERROR,
+      payload: { error }
+    };
+  }
+  

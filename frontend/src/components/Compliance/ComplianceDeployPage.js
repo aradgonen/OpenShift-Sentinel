@@ -83,7 +83,7 @@ export default function ComplianceDeployPage({theme}) {
                         <Grid item xs={2}/>
                         <Grid item xs={8}>
                             <Button variant="outlined"
-                                style={{maxWidth: '750px', minWidth: '750px', textAlign: 'center'}}
+                                style={{maxWidth: '100%', minWidth: '100%', textAlign: 'center'}}
                                 onClick = {onDeployClickHandler}>
                                     DEPLOY
                             </Button>

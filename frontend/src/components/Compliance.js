@@ -1,84 +1,55 @@
 import React, {useEffect, useState} from 'react'
-import MaterialTable from 'material-table'
-import { Container, Grid, Paper, styled, Button } from '@mui/material';
-import PolicyService from '../services/policy.service'
-import YamlEditor from './ui/YamlEditor';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import NativeSelect from '@mui/material/NativeSelect';
+import ComplianceYamlPage from './Compliance/ComplianceYamlPage';
+import ComplianceDeployPage from './Compliance/ComplianceDeployPage';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+
+
 
 export default function Compliance ({theme}) {
+    
+    const yamlPage = <ComplianceYamlPage/>
+    const deployPage = <ComplianceDeployPage/>
+
+    const yamlPageText = 'ComplianceYamlPage'
+    const deployPageText = 'ComplianceDeployPage'
+
+    let [currentPage, setCurrentPage]  = useState(deployPage);  
 
 
-    let [tableData, setTableData]  = useState([]);  
-    let [currentPolicy, setCurrentPolicy]  = useState('');
-    let [currentPolicyContent, setcurrentPolicyContent]  = useState('defualt policy content');
-
-    useEffect(async () => {
-        let tempTableData = [];
-        let data = await PolicyService.getAllPolicies()
-        data.data["yaml-files"].map((file, index) => {
-            tempTableData.push({policyName: file["file"], path: file["path"], "repo": file["repo"]})
-        })
-        setTableData([...tempTableData]);
-    }, [])
-
-    useEffect(async () => {
-        if(currentPolicy !== '') {
-            let data = await PolicyService.getPolicyContent(currentPolicy)
-            setcurrentPolicyContent(data["data"]["content"])
+    const changeCurrentPageHanlder = (event) => {
+        switch (event.target.value) {
+            case yamlPageText: setCurrentPage(yamlPage); break
+            case deployPageText: setCurrentPage(deployPage); break
         }
-    }, [currentPolicy])
 
-    const policyChangeHandler = (path='') => {
-        setCurrentPolicy(path)
     }
+    const dropDownPageList = <FormControl fullWidth>
+        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+            View
+        </InputLabel>
+        <NativeSelect
+            defaultValue={yamlPage}
+            inputProps={{
+            name: 'view',
+            id: 'uncontrolled-native',
+            }}
+            onChange={changeCurrentPageHanlder}
+        >
+            <option value={deployPageText}>{deployPageText}</option>
+            <option value={yamlPageText}>{yamlPageText}</option>
+        </NativeSelect>
+    </FormControl>
 
-    let policiesTable = <MaterialTable
-    columns={[
-      { title: 'Policy', field: 'policyName' },
-      { title: 'Path', field: 'path', hidden: true },
-      { title: 'Repo', field: 'repo', hidden: true }
-    ]}
-    data={tableData}
-    title="Polices"
-    detailPanel={rowData => {
-        policyChangeHandler(rowData["path"])
-        return (
-                <Grid container spacing={1}>
-                <Grid item xs={5}>
-                    <Item>{rowData["path"]}</Item>
-                </Grid>
-                <Grid item xs={5}>
-                    <Item>{rowData["repo"]}</Item>
-                </Grid>
-                </Grid>
-        )
-      }}
-    onRowClick={(event, rowData, detailPanel ) => detailPanel(rowData)}
-  />
 
-  const onPolicyRowHandle = (policy) => {
-      setCurrentPolicy(policy)
-      console.log(currentPolicy)
-  }
 
     return(
-        <Grid container spacing={2} >
-            <Grid item xs={0.5}></Grid>
-            <Grid item xs={5}>
-                {policiesTable}
-            </Grid>
-            <Grid item xs={6}>
-                <YamlEditor yaml={currentPolicyContent}/>
-            </Grid>
-            <Grid item xs={0.5}></Grid>
-        </Grid>
-
+        <div>
+            {dropDownPageList}
+            {currentPage}
+        </div>
+        
     )
 }

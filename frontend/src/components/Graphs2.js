@@ -6,17 +6,20 @@ import { PieChart } from "./charts/piechart";
 import { BarChart } from "./charts/barchart";
 import { Container } from '@mui/material';
 import MaterialTable from 'material-table'
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function _renderGraphs(lineData, pieData, barData, tableData) {
-    console.log(Object.keys(pieData.audit))
     return(
         <div>
         {/* <SimpleChart></SimpleChart> */}
-  
-        <Container maxWidth="sm">
+        {(pieData.audit.length != 0)? 
+        (<Container maxWidth="sm">
           <PieChart labels = {Object.keys(pieData.audit)} dataset = {Object.values(pieData.audit)}></PieChart>
-        </Container>
+        </Container>) : (<Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>)
+        }
         {/* <Container maxWidth="sm">
         <BarChart title="event type" legendPosition="left" datasetLabels={barData.datasetlabels} datasetData={barData.dataset} labels={barData.labels}></BarChart>
         </Container>
@@ -42,7 +45,7 @@ export default function Graphs() {
 
   useEffect(()=> {
       dispatch(fetchAllAuditLog());
-  },[dispatch]);
+  },[]);
 
   return (
     _renderGraphs(audit,audit,audit,audit)

@@ -29,7 +29,7 @@ services:
     hostname: backend
     environment:
       - DB_URL=db
-      - PROXY_URL=openshift-api-fetcher
+      - PROXY_URL=openshift-api-fetcher:5555/
     depends_on:
       - db
     restart: always

@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/proxy")
 public class RestProxyController {
-    String baseUrl = "http://"+System.getenv("PROXY_URL")+":5000/";
+    String baseUrl = "http://"+System.getenv("PROXY_URL")+"/";
     RestTemplate restTemplate = new RestTemplate();
 
     //    @PreAuthorize("hasRole('ADMIN')")

@@ -77,7 +77,7 @@ export default function Soar() {
   }
   useEffect(() => {
       dispatch(fetchNamespaces());
-  },[dispatch])
+  },[])
   useEffect(()=> {
       dispatch(fetchPodsByNamespcae());
   },[namespace]);

@@ -1,4 +1,4 @@
-import { fetchAllAuditLog, fetchNamespaces,fetchPodsByNamespcae } from '../store/actions/data'
+import { fetchAllAuditLog, fetchAuditEventsByUser, fetchAuditUrisByUser, fetchNamespaces,fetchPodsByNamespcae } from '../store/actions/data'
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleChart from "./charts/simpleChart";
@@ -9,45 +9,59 @@ import MaterialTable from 'material-table'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-function _renderGraphs(lineData, pieData, barData, tableData) {
+function _renderGraphs(data) {
+  console.log(data.audit_uri_count_by_user)
     return(
         <div>
         {/* <SimpleChart></SimpleChart> */}
-        {(pieData.audit.length != 0)? 
+        {(data.audit_event_count_by_user.length != 0)? 
         (<Container maxWidth="sm">
-          <PieChart labels = {Object.keys(pieData.audit)} dataset = {Object.values(pieData.audit)}></PieChart>
-        </Container>) : (<Box sx={{ display: 'flex' }}>
+          <PieChart labels = {Object.keys(data.audit_event_count_by_user)} dataset = {Object.values(data.audit_event_count_by_user)}></PieChart>
+        </Container>) : (<Box   display="flex"
+  justifyContent="center"
+  alignItems="center"
+  minHeight="100vh">
       <CircularProgress />
     </Box>)
         }
-        {/* <Container maxWidth="sm">
-        <BarChart title="event type" legendPosition="left" datasetLabels={barData.datasetlabels} datasetData={barData.dataset} labels={barData.labels}></BarChart>
-        </Container>
+        {(data.audit_uri_count_by_user.length != 0)? (
         <Container maxWidth="sm">
-        <MaterialTable
-            columns={[
-              { title: 'Adı', field: 'name' },
-              { title: 'Soyadı', field: 'surname' },
-              { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-              { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
-            ]}
-            data={tableData}
-            title="Demo Title"
-          />
-          </Container> */}
+        <BarChart title="event type" legendPosition="left" datasetLabels={Object.keys(data.audit_event_count_by_user)} datasetData={Object.keys(data.audit_event_count_by_user)} labels={Object.keys(data.audit_event_count_by_user)}></BarChart>
+        </Container>) : (<Box   display="flex"
+  justifyContent="center"
+  alignItems="center"
+  minHeight="100vh">
+      <CircularProgress />
+    </Box>)
+        }
       </div>
+      // <Container maxWidth="sm">
+      // <MaterialTable
+      //     columns={[
+      //       { title: 'Adı', field: 'name' },
+      //       { title: 'Soyadı', field: 'surname' },
+      //       { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+      //       { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
+      //     ]}
+      //     data={tableData}
+      //     title="Demo Title"
+      //   />
+      //   </Container>
     )
   }
 
 export default function Graphs() {
-  const audit = useSelector((state) => state.data)
+  const audit_event_count_by_user = useSelector((state) => state.data)
+  const audit_uri_count_by_user = useSelector((state) => state.data)
   const dispatch = useDispatch();
 
   useEffect(()=> {
-      dispatch(fetchAllAuditLog());
+      dispatch(fetchAuditEventsByUser());
   },[]);
-
+  useEffect(()=> {
+    dispatch(fetchAuditUrisByUser());
+},[]);
   return (
-    _renderGraphs(audit,audit,audit,audit)
+    _renderGraphs(audit_event_count_by_user,audit_event_count_by_user,audit_uri_count_by_user,audit_uri_count_by_user)
   );
 }

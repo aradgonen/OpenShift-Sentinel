@@ -41,7 +41,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
   useEffect(() => {
     console.log('user effect')
     if (username) {
-      userSettings = ['logout']
+      userSettings = ['logout','mod','user','admin']
     } else {
       userSettings = ['login', 'register']
     }
@@ -145,7 +145,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-           LOGO
+           Openshift-Sentinel
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

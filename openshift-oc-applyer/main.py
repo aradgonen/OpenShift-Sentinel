@@ -5,9 +5,9 @@ from flask import Flask, json
 import requests
 
 openshift_server = 'https://api.projocp.cloudlet-dev.com:6443'
-token = 'sha256~jrctwjUyj6FMo-4VqQqCeFEJO7bfQLQGzeoLgHVWYKU'
-login = 'oc login --username=kubeadmin --password=ZYeI4-oyVps-AJdHb-EwuxV --server=' + openshift_server
-logout = 'oc logout'
+#token = 'sha256~jrctwjUyj6FMo-4VqQqCeFEJO7bfQLQGzeoLgHVWYKU'
+#login = 'oc login --username=kubeadmin --password=ZYeI4-oyVps-AJdHb-EwuxV --server=' + openshift_server
+#logout = 'oc logout'
 policy_path = './rhacm-policies.yaml'
 deploy_policy = 'oc apply -f ' + policy_path
 api = Flask(__name__)
@@ -19,10 +19,10 @@ def deploy():
     unchanged = []
     failed = []
 
-    os.system(login)
+    #os.system(login)
     # out_logs = os.system(deploy_policy)
     arch = subprocess.check_output(deploy_policy, shell=True).decode(sys.stdout.encoding)
-    os.system(logout)
+    #os.system(logout)
 
     output = arch.split('\n')
     for line in output:

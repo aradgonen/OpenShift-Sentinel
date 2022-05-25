@@ -38,7 +38,7 @@ function _renderAccessCount(data){
     
     <Container maxWidth="sm">
 
-    <BarChart title={" URI Access Distribuition"} legendPosition="left" datasetLabels={Object.keys(data.audit_uri_count_by_user)} labels={Object.keys(data.audit_uri_count_by_user)} datasetData={data.audit_uri_count_by_user}></BarChart>
+    <BarChart title={" URI Access Distribuition"} legendPosition="left" datasetLabels={Object.keys(data.audit_uri_count_by_user)} labels={Object.keys(data.audit_uri_count_by_user)} datasetData={[data.audit_uri_count_by_user]}></BarChart>
     </Container>) : (<Box   display="flex"
 justifyContent="center"
 alignItems="center"

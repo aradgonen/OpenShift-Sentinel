@@ -64,11 +64,14 @@ def get_audit_uris_count_by_user(uris):
     for uri in uris:
         for document in mycol.find({'requestURI':uri}):
             if ':' not in document.get('user').get('username'):
-                if document.get('requestURI') not in uris_dict.keys():
-                    uris_dict[document.get('requestURI')] = {}
-                    uris_dict[document.get('requestURI')][document.get('user').get('username')] = 1
+                if document.get('user').get('username') not in uris_dict.keys():
+                    uris_dict[document.get('user').get('username')] = {}
+                    uris_dict[document.get('user').get('username')][document.get('requestURI')] = 1
                 else:
-                    uris_dict[document.get('requestURI')][document.get('user').get('username')] += 1
+                    if document.get('requestURI') not in uris_dict[document.get('user').get('username')].keys():
+                        uris_dict[document.get('user').get('username')][document.get('requestURI')] = 1
+                    else:
+                        uris_dict[document.get('user').get('username')][document.get('requestURI')] += 1
     return uris_dict
 if __name__ == '__main__':
     api.run(port=5000)

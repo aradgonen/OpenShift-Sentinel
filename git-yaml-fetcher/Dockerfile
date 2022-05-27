@@ -1,6 +1,6 @@
 #Split to stages, this is build stage
 FROM python
-WORKDIR /openshift-yaml-fetcher
+WORKDIR /git-yaml-fetcher
 
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt

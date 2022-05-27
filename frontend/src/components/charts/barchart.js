@@ -36,19 +36,6 @@ ChartJS.register(
     const arad_labels = ['/api', '/routes']
   }*/
 
-const arad_data = {
-    arad: {
-      '/api':5,
-      '/routes':3
-    },
-    yoav: {
-      '/api':7,
-      '/routes':4
-    }
-  }
-
-const arad_labels = ['/api', '/routes']
-
 
 export function BarChart({chartLables = [], chartData = {}, title = '', legendPosition = ''}) {
 

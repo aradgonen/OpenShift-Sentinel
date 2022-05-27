@@ -110,6 +110,7 @@ export function BarChart({chartLables = [], chartData = {}, title = '', legendPo
         datasets: finalDatasets,
       };
 
+    
       
     return <Bar options={options} data={tableFinalData} />;
 }

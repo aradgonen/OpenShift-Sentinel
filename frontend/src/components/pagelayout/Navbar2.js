@@ -149,7 +149,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-            <Link style={{color:'white'}} to={baseUrl + page}>
+            <Link key={page} style={{color:'white'}} to={baseUrl + page}>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -212,7 +212,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
                       functionOnSubmit={""}></DraggableDialog> */}
                   // </Link>
                 // }
-                return <Link to={baseUrl + setting}>
+                return <Link key={setting + "link"} to={baseUrl + setting}>
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>

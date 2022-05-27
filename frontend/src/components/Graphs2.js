@@ -1,7 +1,6 @@
-import { fetchAllAuditLog, fetchAuditEventsByUser, fetchAuditUrisByUser, fetchNamespaces,fetchPodsByNamespcae } from '../store/actions/data'
-import React, { useState, useEffect } from "react";
+import { fetchAuditEventsByUser, fetchAuditUrisByUser } from '../store/actions/data'
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SimpleChart from "./charts/simpleChart";
 import { PieChart } from "./charts/piechart";
 import { BarChart } from "./charts/barchart";
 import { Container, Typography } from '@mui/material';
@@ -11,16 +10,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 function _renderAuditEventCount(data){
   return(
     <div>
-  {(data.audit_event_count_by_user.length != 0)? 
+  {(data.audit_event_count_by_user.length !== 0)? 
     (<Container maxWidth="sm">
       <PieChart labels = {Object.keys(data.audit_event_count_by_user)} dataset = {Object.values(data.audit_event_count_by_user)}></PieChart>
     </Container>) : (<Box   display="flex"
@@ -34,11 +28,11 @@ minHeight="100vh">
   )
 }
 function _renderAccessCount(data){
-  return (<div>        {(data.audit_uri_count_by_user.length != 0)? (
+  return (<div>        {(data.audit_uri_count_by_user.length !== 0)? (
     
     <Container maxWidth="sm">
 
-    <BarChart title={" URI Access Distribuition"} legendPosition="left" datasetLabels={Object.keys(data.audit_uri_count_by_user)} labels={Object.keys(data.audit_uri_count_by_user)} datasetData={[data.audit_uri_count_by_user]}></BarChart>
+    <BarChart title={" URI Access Distribuition"} legendPosition="left" chartLables={Object.keys(data.audit_uri_count_by_user)} chartData={data.audit_uri_count_by_user}></BarChart>
     </Container>) : (<Box   display="flex"
 justifyContent="center"
 alignItems="center"
@@ -75,10 +69,10 @@ export default function Graphs() {
   
   useEffect(()=> {
       dispatch(fetchAuditEventsByUser());
-  },[]);
+  },[dispatch]);
   useEffect(()=> {
     dispatch(fetchAuditUrisByUser());
-},[]);
+},[dispatch]);
   return (
 <Container>
 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

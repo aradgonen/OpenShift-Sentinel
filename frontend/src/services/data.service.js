@@ -13,12 +13,16 @@ const openshift_delete_pod = (namespace,pod) => {
     return axios.delete(API_URL + "openshift/soar/pods/"+namespace+"/"+pod);
 }
 
-const audit_all = () => {
-  return axios.get(API_URL + "audit/log/all");
+const audit_events_by_user = () => {
+  return axios.get(API_URL + "audit/log/countbyusername");
+}
+const audit_routes_by_user = () => {
+  return axios.get(API_URL + "audit/log/uris");
 }
 export default {
     openshift_list_namespaces,
     openshift_list_pods,
     openshift_delete_pod,
-    audit_all
+    audit_events_by_user,
+    audit_routes_by_user
 };

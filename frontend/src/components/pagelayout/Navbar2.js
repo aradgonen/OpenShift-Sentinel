@@ -22,7 +22,7 @@ import DraggableDialog from '../ui/draggableDialog';
 
 const baseUrl = "/"
 
-const pages = ['home', 'graphs', 'soar','compliance'];
+const pages = ['home', 'soar','compliance'];
 let settings = [];
 let baseSettings = []
 let userSettings = []
@@ -41,7 +41,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
   useEffect(() => {
     console.log('user effect')
     if (username) {
-      userSettings = ['logout']
+      userSettings = ['logout','mod','user','admin']
     } else {
       userSettings = ['login', 'register']
     }
@@ -145,11 +145,11 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-           LOGO
+           Openshift-Sentinel
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-            <Link style={{color:'white'}} to={baseUrl + page}>
+            <Link key={page} style={{color:'white'}} to={baseUrl + page}>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -212,7 +212,7 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
                       functionOnSubmit={""}></DraggableDialog> */}
                   // </Link>
                 // }
-                return <Link to={baseUrl + setting}>
+                return <Link key={setting + "link"} to={baseUrl + setting}>
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>

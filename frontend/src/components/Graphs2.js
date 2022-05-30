@@ -30,10 +30,8 @@ minHeight="100vh">
 function _renderAccessCount(data){
   return (<div>        {(data.audit_uri_count_by_user.length !== 0)? (
     
-    <Container maxWidth="sm">
-
-    <BarChart title={" URI Access Distribuition"} legendPosition="left" chartLables={Object.keys(data.audit_uri_count_by_user)} chartData={data.audit_uri_count_by_user}></BarChart>
-    </Container>) : (<Box   display="flex"
+    <BarChart title={" URI Access Distribuition"} legendPosition="left" chartData={data.audit_uri_count_by_user}></BarChart>
+) : (<Box   display="flex"
 justifyContent="center"
 alignItems="center"
 minHeight="100vh">
@@ -61,11 +59,10 @@ export default function Graphs() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
-    padding: theme.spacing(18),
+    padding: theme.spacing(3),
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-
   
   useEffect(()=> {
       dispatch(fetchAuditEventsByUser());
@@ -75,13 +72,12 @@ export default function Graphs() {
 },[dispatch]);
   return (
 <Container>
-<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
   <Grid item xs={6}>
     <Item>
       <Typography>Audit Event Count By User</Typography>
       {_renderAuditEventCount(audit_event_count_by_user)}
       </Item>
-    
   </Grid>
   <Grid item xs={6}>
   <Item>

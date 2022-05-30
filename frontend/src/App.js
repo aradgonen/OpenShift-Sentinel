@@ -18,6 +18,7 @@ import BoardAdmin from "./components/BoardAdmin";
 import NavBar2 from "./components/pagelayout/Navbar2"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Alert from './components/ui/alert';
 
 
 const App = () => {
@@ -50,12 +51,11 @@ const App = () => {
     <Router>
           <ThemeProvider theme={theme}>
             <CssBaseline/>
-            {/* <NavBar/> */}
             <NavBar2 theme = {theme} themeHandler={setPreferedLightMode}/>
+            <Alert></Alert>
           <Routes>
             <Route exact path="/" element={<Graphs/>}/>
             <Route exact path="/home" element={<Graphs/>}/>
-            {/* <Route exact path="/graphs" element={<Graphs/>}/> */}
             <Route exact path="/compliance" element={<Compliance/>}/>
             <Route exact path="/login" element={<Login2/>} />
             <Route exact path="/register" element={<Register2/>} />
@@ -66,6 +66,7 @@ const App = () => {
             <Route path="/admin" element={<BoardAdmin/>} />
             <Route path="/soar" element={<Soar/>}/>
           </Routes>
+
           </ThemeProvider>
     </Router>
   );

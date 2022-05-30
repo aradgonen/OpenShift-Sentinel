@@ -25,6 +25,7 @@ const chartData = {
         OpenShift-Sentinel - World's First SIEM For RedHat OpenShift!
       </Typography>
 
+    {/* chartLables is not a must! see the compenent for more explanation */}
     <BarChart legendPosition='top' title='api router chart' chartData={chartData} chartLables={['/api/api?/wow/route3/4/5']}></BarChart>
 </Box>
   );

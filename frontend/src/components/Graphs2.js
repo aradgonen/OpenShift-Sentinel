@@ -1,53 +1,101 @@
-import { fetchAllAuditLog, fetchNamespaces,fetchPodsByNamespcae } from '../store/actions/data'
-import React, { useState, useEffect } from "react";
+import { fetchAuditEventsByUser, fetchAuditUrisByUser } from '../store/actions/data'
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SimpleChart from "./charts/simpleChart";
 import { PieChart } from "./charts/piechart";
 import { BarChart } from "./charts/barchart";
-import { Container } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import MaterialTable from 'material-table'
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 
-function _renderGraphs(lineData, pieData, barData, tableData) {
-    return(
-        <div>
-        {/* <SimpleChart></SimpleChart> */}
-        {(pieData.audit.length != 0)? 
-        (<Container maxWidth="sm">
-          <PieChart labels = {Object.keys(pieData.audit)} dataset = {Object.values(pieData.audit)}></PieChart>
-        </Container>) : (<Box sx={{ display: 'flex' }}>
-      <CircularProgress />
-    </Box>)
-        }
-        {/* <Container maxWidth="sm">
-        <BarChart title="event type" legendPosition="left" datasetLabels={barData.datasetlabels} datasetData={barData.dataset} labels={barData.labels}></BarChart>
-        </Container>
-        <Container maxWidth="sm">
-        <MaterialTable
-            columns={[
-              { title: 'Adı', field: 'name' },
-              { title: 'Soyadı', field: 'surname' },
-              { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-              { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
-            ]}
-            data={tableData}
-            title="Demo Title"
-          />
-          </Container> */}
+function _renderAuditEventCount(data){
+  return(
+    <div>
+  {(data.audit_event_count_by_user.length !== 0)? 
+    (<Container maxWidth="sm">
+      <PieChart labels = {Object.keys(data.audit_event_count_by_user)} dataset = {Object.values(data.audit_event_count_by_user)}></PieChart>
+    </Container>) : (<Box   display="flex"
+justifyContent="center"
+alignItems="center"
+minHeight="100vh">
+  <CircularProgress />
+</Box>)
+    }
       </div>
-    )
-  }
+  )
+}
+function _renderAccessCount(data){
+  return (<div>        {(data.audit_uri_count_by_user.length !== 0)? (
+    
+    <Container maxWidth="sm">
 
+    <BarChart title={" URI Access Distribuition"} legendPosition="left" chartLables={Object.keys(data.audit_uri_count_by_user)} chartData={data.audit_uri_count_by_user}></BarChart>
+    </Container>) : (<Box   display="flex"
+justifyContent="center"
+alignItems="center"
+minHeight="100vh">
+  <CircularProgress />
+</Box>)
+    }</div>)
+}
+function _renderTable(data){
+  return (      <MaterialTable
+    columns={[
+      { title: 'Event', field: 'event-name' },
+      { title: 'URI', field: 'event-uri' },
+      { title: 'Date', field: 'date', type: 'date' },
+      { title: 'Username', field: 'username' }
+    ]}
+    data={[{ 'event-name': 'Access', 'event-uri': '/api', date: 1987, username: "aradgonen" }]}
+    title="Demo Title"
+  />)
+}
 export default function Graphs() {
-  const audit = useSelector((state) => state.data)
+  const audit_event_count_by_user = useSelector((state) => state.data)
+  const audit_uri_count_by_user = useSelector((state) => state.data)
   const dispatch = useDispatch();
 
-  useEffect(()=> {
-      dispatch(fetchAllAuditLog());
-  },[]);
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(18),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
+  
+  useEffect(()=> {
+      dispatch(fetchAuditEventsByUser());
+  },[dispatch]);
+  useEffect(()=> {
+    dispatch(fetchAuditUrisByUser());
+},[dispatch]);
   return (
-    _renderGraphs(audit,audit,audit,audit)
+<Container>
+<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+  <Grid item xs={6}>
+    <Item>
+      <Typography>Audit Event Count By User</Typography>
+      {_renderAuditEventCount(audit_event_count_by_user)}
+      </Item>
+    
+  </Grid>
+  <Grid item xs={6}>
+  <Item>
+    <Typography>URI Access Count By User</Typography>
+    {_renderAccessCount(audit_uri_count_by_user)}
+    </Item>
+  </Grid>
+  <Grid item xs={12}>
+  <Item>
+    <Typography>All Audit Events</Typography>
+    {_renderTable()}
+    </Item>
+  </Grid>
+</Grid>
+</Container>
   );
 }

@@ -53,9 +53,9 @@ const App = () => {
             {/* <NavBar/> */}
             <NavBar2 theme = {theme} themeHandler={setPreferedLightMode}/>
           <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/home" element={<Home/>}/>
-            <Route exact path="/graphs" element={<Graphs/>}/>
+            <Route exact path="/" element={<Graphs/>}/>
+            <Route exact path="/home" element={<Graphs/>}/>
+            {/* <Route exact path="/graphs" element={<Graphs/>}/> */}
             <Route exact path="/compliance" element={<Compliance/>}/>
             <Route exact path="/login" element={<Login2/>} />
             <Route exact path="/register" element={<Register2/>} />

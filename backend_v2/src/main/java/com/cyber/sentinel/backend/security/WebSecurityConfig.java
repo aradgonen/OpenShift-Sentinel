@@ -68,6 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/compliance**",
                         "/registration**",
                         "/js/**",
+                        "/api/broadcast**",
+                        "/api/broadcast/**",
+                        "/broadcast**",
+                        "/broadcast/**",
+                        "/show**",
+                        "/hide**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**", "/error**").permitAll()

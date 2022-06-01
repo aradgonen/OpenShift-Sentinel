@@ -32,4 +32,6 @@ public class WebsocketController {
 //        simpMessagingTemplate.convertAndSend("/topic/public",
 //            new MessageBean("alert", "show"));
 //    }
+    //todo
+    //start handling a security threat and then show the alert on the client, and then hide it
 }

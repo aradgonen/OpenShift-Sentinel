@@ -41,8 +41,6 @@ def get_container_images():
     return jsonify({"containers": result})
 
 
-
-
 if __name__ == '__main__':
     api.run(port=5004)
     #get_container_images()

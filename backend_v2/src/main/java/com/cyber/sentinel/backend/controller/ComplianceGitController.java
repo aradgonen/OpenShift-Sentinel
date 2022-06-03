@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/compliance")
 public class ComplianceGitController {
-    String baseUrl = "http://localhost:5002";
+    String baseUrl = "http://"+System.getenv("COMPLIANCE_URL")+"/";
     RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/files/all")

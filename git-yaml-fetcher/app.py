@@ -15,6 +15,9 @@ class remote_files:
   def __init__(self):
     self.files = {}
 
+
+remote_files_obj = remote_files()
+
 @api.route(base_url + '/yaml/all', methods=['GET'])
 def git_yaml_files():
     if not bool(remote_files_obj.files):
@@ -44,5 +47,4 @@ def git_yaml_file():
 
 
 if __name__ == '__main__':
-    remote_files_obj = remote_files()
     api.run(port=5002)

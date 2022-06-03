@@ -21,6 +21,8 @@ ChartJS.register(
   Legend
 );
 
+const labelDoesNotExist = -1
+
 /**
  * EXMAPLE DATA FOR THIS COMPONENT
  * const arad_data = {
@@ -39,77 +41,95 @@ ChartJS.register(
 
 export function BarChart({chartLables = [], chartData = {}, title = '', legendPosition = ''}) {
 
-    const tableXAsixLables = [...chartLables]
+ 
 
-    // The keys of the json - in the example - the users
-    // for each user - creates it's data for each legend
-    const dataSetKeys = Object.keys(chartData) 
-    /**const legendLabels = [...dataSetKeys] EXPLANATION - THE dataSetKeys are the legend Labels - ie the users */
+  // The keys of the json - in the example - the users
+  // for each user - creates it's data for each legend
+  const dataSetKeys = Object.keys(chartData) 
+  /**const legendLabels = [...dataSetKeys] EXPLANATION - THE dataSetKeys are the legend Labels - ie the users */
 
-    // the data for the table
-    // each keys ie user, has it's own data (for each route)
-    const dataSetKeysData = {...chartData}
+  // the data for the table
+  // each keys ie user, has it's own data (for each route)
+  const dataSetKeysData = {...chartData}
 
 
-    // setting the legend position
-    if (legendPosition !== 'top' &&
-        legendPosition !== 'bottom' &&
-        legendPosition !== 'left' &&
-        legendPosition !== 'right') {
-            legendPosition = 'top'
+  const tableXAsixLables = [...chartLables]
+
+  // if barchart did not get specified labels, creating from data
+  if (chartLables .length === 0) {
+    console.log('empty chartlabels')
+    dataSetKeys.forEach((datasetKey) => {
+      Object.keys(dataSetKeysData[datasetKey]).forEach((label) => {
+        if(tableXAsixLables.indexOf(label) === labelDoesNotExist) {
+          tableXAsixLables.push(label)
         }
+      })
+    }) 
+  }
 
-    // setting the options
-    const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: legendPosition,
-          },
-          title: {
-            display: true,
-            text: title,
-          },
+
+  // setting the legend position
+  if (legendPosition !== 'top' &&
+      legendPosition !== 'bottom' &&
+      legendPosition !== 'left' &&
+      legendPosition !== 'right') {
+          legendPosition = 'top'
+      }
+
+  // setting the options
+  const options = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: legendPosition,
         },
-      };
+        title: {
+          display: true,
+          text: title,
+        },
+      },
+    };
 
 
-      // this function creates the table data for each legend - 
-      // i.e - for each legend/user, creates it's data for each axis label (route)
-      // for example - 
-      // for arad cretea = 
-      /**
-       * {
-       *  label:arad,
-       *  data: [
-       *    5, //for /api
-       *    3, //for /route
-       *  ]
-       * }
-       */
-      // same for yoav, and then create an array that contains both
+    // this function creates the table data for each legend - 
+    // i.e - for each legend/user, creates it's data for each axis label (route)
+    // for example - 
+    // for arad cretea = 
+    /**
+     * {
+     *  label:arad,
+     *  data: [
+     *    5, //for /api
+     *    3, //for /route
+     *  ]
+     * }
+     */
+    // same for yoav, and then create an array that contains both
 
-      // creates the dataset 
-      const finalDatasets = []
+    // creates the dataset 
+    const finalDatasets = []
 
-      // for each key ie user
-      dataSetKeys.forEach((dataSetKey) => {
-        // pushing the data for that user
-        finalDatasets.push({
-              label: dataSetKey, //ie same as legend - a user
-              data: tableXAsixLables.map((axieLabel) => { return dataSetKeysData [dataSetKey][axieLabel] }), //for each axieLabel - gets the axieLabel number - /api, gets the data in {user:{'/api':number}}
-              backgroundColor: BarChartColorsGenerator(1),
-          })
-    });
+    // for each key ie user
+    dataSetKeys.forEach((dataSetKey) => {
+      // pushing the data for that user
+      finalDatasets.push({
+            label: dataSetKey, //ie same as legend - a user
+            data: tableXAsixLables.map((axieLabel) => { return dataSetKeysData [dataSetKey][axieLabel] }), //for each axieLabel - gets the axieLabel number - /api, gets the data in {user:{'/api':number}}
+            backgroundColor: BarChartColorsGenerator(1),
+        })
+  });
 
-    // in the final data that is sent to the react-chartjs-2 the names must be as follow
-    // setting the name labels only here for readabillity of the code
-    const labels = [...tableXAsixLables]
-    const tableFinalData = {
-        labels,
-        datasets: finalDatasets,
-      };
+  // in the final data that is sent to the react-chartjs-2 the names must be as follow
+  // setting the name labels only here for readabillity of the code
+  const labels = [...tableXAsixLables]
 
-      
-    return <Bar options={options} data={tableFinalData} />;
+  const tableFinalData = {
+      labels,
+      datasets: finalDatasets,
+  };
+
+  console.log(tableFinalData)
+
+    
+  return <Bar options={options} data={tableFinalData} />;
 }

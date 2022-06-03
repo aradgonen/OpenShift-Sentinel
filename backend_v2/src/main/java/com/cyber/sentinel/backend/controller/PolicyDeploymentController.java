@@ -16,7 +16,7 @@ import java.util.HashMap;
 @RequestMapping("/api/deploy")
 public class PolicyDeploymentController {
     RestTemplate restTemplate = new RestTemplate();
-    String baseUrl = "http://localhost:5001";
+    String baseUrl = "http://"+System.getenv("DEPLOY_URL")+"/";
 
     @GetMapping("/policies")
     public String deployPolicies() throws JsonProcessingException {

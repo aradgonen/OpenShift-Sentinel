@@ -1,14 +1,5 @@
-import {
-    FETCH_NAMESPACES_PENDING,
-    FETCH_NAMESPACES_SUCCESS,
-    FETCH_NAMESPACES_ERROR,
-    FETCH_PODS_PENDING,
-    FETCH_PODS_SUCCESS,
-    FETCH_PODS_ERROR,
-    FETCH_AUDITLOG_PENDING,
-    FETCH_AUDITLOG_SUCCESS,
-    FETCH_AUDITLOG_ERROR
-  } from "./data-types";
+import {FETCH_NAMESPACES_PENDING, FETCH_NAMESPACES_SUCCESS, FETCH_NAMESPACES_ERROR,FETCH_PODS_PENDING,FETCH_PODS_SUCCESS,FETCH_PODS_ERROR, FETCH_AUDIT_EVENT_COUNT_BY_USER_PENDING, FETCH_AUDIT_EVENT_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_EVENT_COUNT_BY_USER_ERROR,FETCH_AUDIT_URI_COUNT_BY_USER_PENDING, FETCH_AUDIT_URI_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_URI_COUNT_BY_USER_ERROR} from './data-types';
+
   
   export function fetchDataRequest() {
     return {
@@ -48,22 +39,41 @@ import {
       payload: { error }
     };
   }
-  export function fetchAuditDataRequest() {
+  export function fetchAuditEventCountByUserRequest() {
     return {
-      type: FETCH_AUDITLOG_PENDING
+      type: FETCH_AUDIT_EVENT_COUNT_BY_USER_PENDING
     };
   }
   
-  export function fetchAuditDataSuccess(item) {
+  export function fetchAuditEventCountByUserSuccess(item) {
     return {
-      type: FETCH_AUDITLOG_SUCCESS,
+      type: FETCH_AUDIT_EVENT_COUNT_BY_USER_SUCCESS,
       item
     };
   }
   
-  export function fetchAudotDataError(error) {
+  export function fetchAuditEventCountByUserError(error) {
     return {
-      type: FETCH_AUDITLOG_ERROR,
+      type: FETCH_AUDIT_EVENT_COUNT_BY_USER_ERROR,
+      payload: { error }
+    };
+  }
+  export function fetchAuditUriCountByUserRequest() {
+    return {
+      type: FETCH_AUDIT_URI_COUNT_BY_USER_PENDING
+    };
+  }
+  
+  export function fetchAuditUriCountByUserSuccess(item) {
+    return {
+      type: FETCH_AUDIT_URI_COUNT_BY_USER_SUCCESS,
+      item
+    };
+  }
+  
+  export function fetchAuditUriCountByUserError(error) {
+    return {
+      type: FETCH_AUDIT_URI_COUNT_BY_USER_ERROR,
       payload: { error }
     };
   }

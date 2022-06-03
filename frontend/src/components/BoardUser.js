@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import UserService from "../services/user.service";
+import ProfileCard from "./ui/profileCard";
+import Box from '@mui/material/Box';
 
 const BoardUser = () => {
   const [content, setContent] = useState("");
@@ -22,13 +24,10 @@ const BoardUser = () => {
       }
     );
   }, []);
-
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-      </header>
-    </div>
+        <Box justifyContent="center" alignItems="center" display="flex">
+          <ProfileCard user={JSON.parse(localStorage.getItem('user'))}/>  
+        </Box>
   );
 };
 

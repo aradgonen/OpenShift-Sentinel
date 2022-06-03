@@ -27,8 +27,8 @@ def get_openshift_pods():
 def delete_pod_by_namespace(namespace,pod):
     return requests.request("DELETE",namespaces_url+"/"+namespace+"/pods/"+pod, headers=headers, data=payload, verify=False).json()
 
-@api.route('/api/mongodb/audit/log/all', methods=['GET'])
-def get_audit_logs_all():
+@api.route('/api/mongodb/audit/log/countbyusername', methods=['GET'])
+def get_audit_logs_count_by_user():
     audit_dict = {}
     data = []
     # for document in mycol.find():
@@ -43,12 +43,35 @@ def get_audit_logs_all():
             else:
                 audit_dict[user] = 1
     return audit_dict
-
+@api.route('/api/mongodb/audit/log/uris', methods=['GET'])
+def get_audit_logs_uris():
+    return get_audit_uris()
 def get_audit_users():
     data = []
     for document in mycol.distinct("user.username"):
         print(str(document))
         data.append(str(document))
     return list(filter(lambda k: 'system' not in k, data))
+def get_audit_uris():
+    data = []
+    for document in mycol.distinct("requestURI"):
+        print(str(document))
+        data.append(str(document))
+    filterd_data = list(filter(lambda k: '=' not in k, data))
+    return get_audit_uris_count_by_user(list(filter(lambda k: ':' not in k, filterd_data)))
+def get_audit_uris_count_by_user(uris):
+    uris_dict = {}
+    for uri in uris:
+        for document in mycol.find({'requestURI':uri}):
+            if ':' not in document.get('user').get('username'):
+                if document.get('user').get('username') not in uris_dict.keys():
+                    uris_dict[document.get('user').get('username')] = {}
+                    uris_dict[document.get('user').get('username')][document.get('requestURI').split('/')[-2] + document.get('requestURI').split('/')[-1]] = 1
+                else:
+                    if (document.get('requestURI').split('/')[-2] + document.get('requestURI').split('/')[-1]) not in uris_dict[document.get('user').get('username')].keys():
+                        uris_dict[document.get('user').get('username')][document.get('requestURI').split('/')[-2] + document.get('requestURI').split('/')[-1]] = 1
+                    else:
+                        uris_dict[document.get('user').get('username')][document.get('requestURI').split('/')[-2] + document.get('requestURI').split('/')[-1]] += 1
+    return uris_dict
 if __name__ == '__main__':
     api.run(port=5000)

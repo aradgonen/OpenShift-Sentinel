@@ -57,8 +57,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/signup**", "/api/auth/signin**", "/api/proxy/openshift/soar/**", "/api/deploy/**", "/api/compliance/**",
-                        "/api/proxy/audit/log/all**",
+                .antMatchers("/api/auth/signup**", "/api/auth/signin**", "/api/proxy/openshift/soar/namespaces**", "/api/deploy/policies/**", "/api/compliance/files**", "/api/compliance/files/all**",
+                        "/api/proxy/audit/log/countbyusername**",
+                        "/api/users/all*",
+                        "/api/users/**",
                         "/api/proxy/audit/log/**",
                         "/api/auth/signin**",
                         "/api/proxy/openshift/soar/**",
@@ -66,6 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/compliance**",
                         "/registration**",
                         "/js/**",
+                        "/api/broadcast**",
+                        "/api/broadcast/**",
+                        "/broadcast**",
+                        "/broadcast/**",
+                        "/show**",
+                        "/hide**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**", "/error**").permitAll()

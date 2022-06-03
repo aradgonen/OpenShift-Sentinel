@@ -2,17 +2,13 @@
 FROM python
 WORKDIR /openshift-oc-applyer
 
-COPY . /openshift-oc-applyer
+COPY . .
 
 RUN pip3 install -r requirements.txt
 
-RUN curl -o oc.tar https://downloads-openshift-console.apps.projocp.cloudlet-dev.com/amd/linux/oc.tar --insecure
+RUN curl -o oc.tar https://downloads-openshift-console.apps.projocp.cloudlet-dev.com/amd64/linux/oc.tar --insecure
 RUN tar xvf oc.tar
 
-ENTRYPOINT ./oc login --token=$TOKEN --server=https://api.projocp.cloudlet-dev.com:6443 --insecure-skip-tls-verify=true
+ENTRYPOINT ./oc login --token=$TOKEN --server=https://api.projocp.cloudlet-dev.com:6443 --insecure-skip-tls-verify=true && python3 -m flask run --host=0.0.0.0 --port=5001
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0","--port=5002"]
-#CMD [ "python3", "app.py", "--host=0.0.0.0" ]
-
-#RUN python3 -m venv /opt/venv
-#CMD ["/bin/sh"]
+CMD [ "/bin/sh"]

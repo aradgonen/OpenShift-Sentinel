@@ -2,6 +2,7 @@ package com.cyber.sentinel.backend.controller;
 
 import com.cyber.sentinel.backend.security.websocket.MessageBean;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +27,20 @@ public class WebsocketController {
         simpMessagingTemplate.convertAndSend("/topic/public",
                 new MessageBean("alert", "hide"));
     }
-//    @Scheduled(fixedRate = 5000)
-//    public void sendMessage() {
-//        System.out.println("a");
-//        simpMessagingTemplate.convertAndSend("/topic/public",
-//            new MessageBean("alert", "show"));
-//    }
-    //todo
-    //start handling a security threat and then show the alert on the client, and then hide it
+    @Scheduled(fixedRate = 5000)
+    public void testSchedule() {
+        System.out.println("a");
+        simpMessagingTemplate.convertAndSend("/topic/public",
+            new MessageBean("alert", "show"));
+    }
+    @GetMapping("/start")
+    public void handleThreat() {
+        simpMessagingTemplate.convertAndSend("/topic/public",
+                new MessageBean("open-alert", "Image: node-10.3.0, ThreatLevel:10"));
+    }
+    @GetMapping("/stop")
+    public void noThreat() {
+        simpMessagingTemplate.convertAndSend("/topic/public",
+                new MessageBean("close-alert", "allgood"));
+    }
 }

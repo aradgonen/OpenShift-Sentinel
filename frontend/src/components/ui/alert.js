@@ -23,7 +23,7 @@ sock.onopen = function(){
 export default function Alert() {
   const [open, setOpen] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
-
+  const [messages , setMessages] = React.useState([]);
   const handleClick = (Transition) => () => {
     setTransition(() => Transition);
     setOpen(true);

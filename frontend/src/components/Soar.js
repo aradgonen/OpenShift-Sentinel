@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import DataService from '../services/data.service';
+import AutoSoar from './ui/autosoar';
 
 const steps = ['Select Namespace', 'Select Pod', 'Kill Pod'];
 
@@ -130,6 +131,8 @@ export default function Soar() {
   };
 
   return (
+    <div>
+      Manual SOAR
     <Box sx={{ width: '100%' }}>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
@@ -185,5 +188,8 @@ export default function Soar() {
         )}
       </div>
     </Box>
+    Autonomous SOAR
+    <AutoSoar/>
+    </div>
   );
 }

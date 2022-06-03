@@ -74,6 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/broadcast/**",
                         "/show**",
                         "/hide**",
+                        "/start**",
+                        "/stop**",
                         "/css/**",
                         "/img/**",
                         "/webjars/**", "/error**").permitAll()

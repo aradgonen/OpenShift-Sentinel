@@ -87,6 +87,23 @@ public class KillableContainer {
         this.isAlive = isAlive;
     }
 
+    public KillableContainer( Container container, CVE cve, boolean isAlive) {
+        this.name = container.getName();
+        this.image = container.getImage();
+        this.namespace = container.getNamespace();
+        this.owner = container.getOwner();
+        this.program = container.getProgram();
+        this.version = container.getVersion();
+        this.registry = container.getRegistry();
+        this.cve_impact = cve.getImpact();
+        this.cve_attackVercotr = cve.getAttackVector();
+        this.cve_score = cve.getScore();
+        this.cve_userInteraction = cve.getUserInteraction();
+        this.cve_attackComplexity = cve.getAttackComplexity();
+        this.cve_description = cve.getDescription();
+        this.isAlive = isAlive;
+    }
+
     public Integer getId() {
         return id;
     }

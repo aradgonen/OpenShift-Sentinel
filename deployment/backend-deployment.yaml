@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yaml
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: backend
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yaml
+        kompose.version: 1.26.1 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: backend
+    spec:
+      containers:
+        - env:
+            - name: COMPLIANCE_URL
+              value: git-yaml-fetcher:5002/
+            - name: DB_URL
+              value: db
+            - name: DEPLOY_URL
+              value: openshift-yaml-fetcher:5001/
+            - name: PROXY_URL
+              value: openshift-api-fetcher:5555/
+          image: aradgonen98/sentinel-backend
+          name: backend
+          ports:
+            - containerPort: 8080
+          resources: {}
+      hostname: backend
+      restartPolicy: Always
+status: {}

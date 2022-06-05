@@ -29,9 +29,11 @@ public class WebsocketController {
     }
     @Scheduled(fixedRate = 5000)
     public void testSchedule() {
-        System.out.println("a");
-        simpMessagingTemplate.convertAndSend("/topic/public",
-            new MessageBean("alert", "show"));
+        System.out.println("Cheking for Threats....");
+        //access to threats db
+        //take the first row
+        //handle it
+        //delete it
     }
     @GetMapping("/start")
     public void handleThreat() {

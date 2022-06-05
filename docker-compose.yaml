@@ -1,6 +1,7 @@
 version: '2'
 services:
   db:
+    image: aradgonen98/sentinel-db
     build:
       context: ./sentinel-postgres/
       dockerfile: ./Dockerfile
@@ -23,6 +24,7 @@ services:
     volumes:
       - mongodb:/data/db
   backend:
+    image: aradgonen98/sentinel-backend
     build:
       context: ./backend_v2/
       dockerfile: ./Dockerfile
@@ -38,6 +40,7 @@ services:
     ports:
       - '8080:8080'
   openshift-api-fetcher:
+    image: aradgonen98/sentinel-openshift-api-fetcher
     build:
       context: ./openshift-api-fetcher/
       dockerfile: ./Dockerfile
@@ -51,8 +54,11 @@ services:
     ports:
       - '5555:5555'
   openshift-audit-todb:
+    image: aradgonen98/sentinel-openshift-audit-todb
     build:
       context: ./openshift-audit-todb/
+      args:
+        - OC_FILE_URL=https://downloads-openshift-console.apps.projocp.cloudlet-dev.com/arm64/linux/oc.tar
       dockerfile: ./Dockerfile
     hostname: openshift-audit-todb
     environment:
@@ -61,6 +67,7 @@ services:
     depends_on:
       - mongodb
   front-end:
+    image: aradgonen98/sentinel-frontend
     build:
       context: ./frontend/
       dockerfile: ./Dockerfile
@@ -73,6 +80,7 @@ services:
     ports:
       - '80:80'
   git-yaml-fetcher:
+    image: aradgonen98/sentinel-git-yaml-fetcher
     build:
       context: ./git-yaml-fetcher/
       dockerfile: ./Dockerfile
@@ -81,8 +89,11 @@ services:
     ports:
       - '5002:5002'
   openshift-oc-applyer:
+    image: aradgonen98/sentinel-openshift-oc-applyer
     build:
       context: ./openshift-oc-applyer/
+      args:
+        - OC_FILE_URL=https://downloads-openshift-console.apps.projocp.cloudlet-dev.com/arm64/linux/oc.tar
       dockerfile: ./Dockerfile
     hostname: openshift-yaml-fetcher
     restart: always

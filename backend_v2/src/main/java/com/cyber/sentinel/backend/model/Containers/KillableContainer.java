@@ -49,8 +49,6 @@ public class KillableContainer {
     @Size(max = 50)
     private String cve_attackVercotr;
 
-    @NotBlank
-    @Size(max = 50)
     private float cve_score;
     private String cve_userInteraction;
 
@@ -59,11 +57,10 @@ public class KillableContainer {
     private String cve_attackComplexity;
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 500)
     private String cve_description;
 
-    @NotBlank
-    @Size(max = 50)
+
     private boolean isAlive;
 
     public KillableContainer() {

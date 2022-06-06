@@ -57,7 +57,7 @@ public class CVE {
     }
 
     public float getScore() {
-        return score;
+        return (float) score;
     }
 
     public void setScore(double score) {

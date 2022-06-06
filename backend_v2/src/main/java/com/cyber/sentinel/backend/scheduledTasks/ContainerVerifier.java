@@ -49,6 +49,7 @@ public class ContainerVerifier {
                 }
                 if (killableContainerRepository.findByName(container.getName()).isEmpty()) {
                     KillableContainer killableContainer = new KillableContainer(container, worstCVE, true);
+                    killableContainerRepository.save(killableContainer);
                 }
             }
             System.out.println();

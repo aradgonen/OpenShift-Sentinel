@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface KillableContainerRepository extends JpaRepository<Role, Long> {
+public interface KillableContainerRepository extends JpaRepository<KillableContainer, Long> {
     Optional<KillableContainer> findByName(String name);
 }

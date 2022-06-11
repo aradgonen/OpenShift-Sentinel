@@ -47,9 +47,13 @@ public class ContainerVerifier {
                         worstCVE = new CVE(cve);
                     }
                 }
-                if (killableContainerRepository.findByName(container.getName()).isEmpty()) {
+
+
+                if (killableContainerRepository.findByName(container.getUid()).isEmpty()) {
                     KillableContainer killableContainer = new KillableContainer(container, worstCVE, true);
+                    killableContainerRepository.flush();
                     killableContainerRepository.save(killableContainer);
+                    killableContainerRepository.flush();
                 }
             }
             System.out.println();

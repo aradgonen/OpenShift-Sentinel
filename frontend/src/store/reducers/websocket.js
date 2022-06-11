@@ -17,7 +17,8 @@ function websocketReducer(state = initialState, action) {
             return {
                 ...state,
                 pending: false,
-                messages: action.item,
+                messages:  [...new Set([...state.messages,action.item])]
+               
             }
         case GET_WS_MESSAGE_ERROR:
             return {

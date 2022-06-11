@@ -16,9 +16,13 @@ export default function AutoSoar(props) {
 
   return (
       (messages.length == 0) ? (<div>No Threats Being Handled Now</div>):(
-    <Card sx={{ maxWidth: 345 }}>
+
+        messages.map(message => {
+          if(JSON.parse(message).alive){
+          return (
+<Card sx={{ maxWidth: 345 }} key={JSON.parse(message).id}>
     <CardHeader/>
-    <Typography>{(JSON.parse(messages).message)}</Typography>
+    <Typography>{message}</Typography>
     <CardContent>
     <Box   display="flex"
 justifyContent="center"
@@ -26,6 +30,9 @@ alignItems="center">
   <CircularProgress />
 </Box>
     </CardContent>
-  </Card>)
+  </Card>
+          )}
+        })
+    )
   );
 }

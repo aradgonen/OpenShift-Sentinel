@@ -27,7 +27,19 @@ public class KillableContainer {
 
     @NotBlank
     @Size(max = 50)
-    private String owner;
+    private String ownerName;
+
+    @NotBlank
+    @Size(max = 50)
+    private String ownerKind;
+
+    @NotBlank
+    @Size(max = 50)
+    private String ownerOwnerName;
+
+    @NotBlank
+    @Size(max = 50)
+    private String ownerOwnerKind;
 
     @NotBlank
     @Size(max = 50)
@@ -67,11 +79,14 @@ public class KillableContainer {
 
     }
 
-    public KillableContainer(String name, String image, String namespace, String owner, String program, String version, String registry, String cve_impact, String cve_attackVercotr, float cve_score, String cve_userInteraction, String cve_attackComplexity, String cve_description, boolean isAlive) {
+    public KillableContainer(String name, String image, String namespace, String ownerName,String ownerKind,String ownerOwnerName,String ownerOwnerKind, String program, String version, String registry, String cve_impact, String cve_attackVercotr, float cve_score, String cve_userInteraction, String cve_attackComplexity, String cve_description, boolean isAlive) {
         this.name = name;
         this.image = image;
         this.namespace = namespace;
-        this.owner = owner;
+        this.ownerName = ownerName;
+        this.ownerKind = ownerKind;
+        this.ownerOwnerName = ownerOwnerName;
+        this.ownerOwnerKind = ownerOwnerKind;
         this.program = program;
         this.version = version;
         this.registry = registry;
@@ -88,7 +103,10 @@ public class KillableContainer {
         this.name = container.getName();
         this.image = container.getImage();
         this.namespace = container.getNamespace();
-        this.owner = container.getOwner();
+        this.ownerName = container.getOwnerName();
+        this.ownerKind = container.getOwnerKind();
+        this.ownerOwnerName = container.getOwnerOwnerName();
+        this.ownerOwnerKind = container.getOwnerOwnerKind();
         this.program = container.getProgram();
         this.version = container.getVersion();
         this.registry = container.getRegistry();
@@ -133,12 +151,36 @@ public class KillableContainer {
         this.namespace = namespace;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerKind() {
+        return ownerKind;
+    }
+
+    public void setOwnerKind(String ownerKind) {
+        this.ownerKind = ownerKind;
+    }
+
+    public String getOwnerOwnerName() {
+        return ownerOwnerName;
+    }
+
+    public void setOwnerOwnerName(String ownerOwnerName) {
+        this.ownerOwnerName = ownerOwnerName;
+    }
+
+    public String getOwnerOwnerKind() {
+        return ownerOwnerKind;
+    }
+
+    public void setOwnerOwnerKind(String ownerOwnerKind) {
+        this.ownerOwnerKind = ownerOwnerKind;
     }
 
     public String getProgram() {

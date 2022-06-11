@@ -8,23 +8,30 @@ public class Container {
     private String name;
     private String image;
     private String namespace;
-    private String owner;
+    private String ownerKind;
+    private String ownerName;
      private String program;
     private String version;
     private String registry;
+    private String ownerOwnerKind;
+    private String ownerOwnerName;
 
     public Container() {
 
     }
 
-    public Container(String name, String image, String namespace, String owner, String program, String version, String registry) {        this.name = name;
+    public Container(String name, String image, String namespace, String ownerKind, String ownerName, String program, String version, String registry, String ownerOwnerKind, String ownerOwnerName) {
+        this.name = name;
         this.image = image;
         this.namespace = namespace;
-        this.owner = owner;
+        this.ownerKind = ownerKind;
+        this.ownerName = ownerName;
         this.program = program;
         this.version = version;
         this.registry = registry;
-      }
+        this.ownerOwnerKind = ownerOwnerKind;
+        this.ownerOwnerName = ownerOwnerName;
+    }
 
     public String getName() {
         return name;
@@ -50,12 +57,36 @@ public class Container {
         this.namespace = namespace;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnerKind() {
+        return ownerKind;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setOwnerKind(String ownerKind) {
+        this.ownerKind = ownerKind;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerOwnerKind() {
+        return ownerOwnerKind;
+    }
+
+    public void setOwnerOwnerKind(String ownerOwnerKind) {
+        this.ownerOwnerKind = ownerOwnerKind;
+    }
+
+    public String getOwnerOwnerName() {
+        return ownerOwnerName;
+    }
+
+    public void setOwnerOwnerName(String ownerOwnerName) {
+        this.ownerOwnerName = ownerOwnerName;
     }
 
     public String getProgram() {
@@ -81,6 +112,9 @@ public class Container {
     public void setRegistry(String registry) {
         this.registry = registry;
     }
+
+
+
 }
 
 

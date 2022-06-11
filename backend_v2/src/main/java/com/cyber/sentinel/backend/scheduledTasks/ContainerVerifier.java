@@ -33,8 +33,8 @@ public class ContainerVerifier {
         System.out.println(containers);
 
         for (Container container : containers) {
-            //ResponseEntity<CVE[]> cveResponse = restTemplate.getForEntity(cveAPI+"/list?keyword=" + container.getProgram() + "&version=" + container.getVersion(), CVE[].class);
-            ResponseEntity<CVE[]> cveResponse = restTemplate.getForEntity(cveAPI+"/list?keyword=" + container.getProgram() + "&version=" + "6.0", CVE[].class);
+            ResponseEntity<CVE[]> cveResponse = restTemplate.getForEntity(cveAPI+"/list?keyword=" + container.getProgram() + "&version=" + container.getVersion(), CVE[].class);
+//            ResponseEntity<CVE[]> cveResponse = restTemplate.getForEntity(cveAPI+"/list?keyword=" + container.getProgram() + "&version=" + "6.0", CVE[].class);
             CVE[] cves = cveResponse.getBody();
 
             if(cves.length != 0) {

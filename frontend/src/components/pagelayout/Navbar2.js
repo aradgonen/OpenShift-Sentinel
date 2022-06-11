@@ -39,7 +39,6 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
 
 
   useEffect(() => {
-    console.log('user effect')
     if (username) {
       userSettings = ['logout','mod','user','admin']
     } else {

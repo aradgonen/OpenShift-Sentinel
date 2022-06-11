@@ -34,7 +34,7 @@ public class WebsocketController {
         simpMessagingTemplate.convertAndSend("/topic/public",
                 new MessageBean("alert", "hide"));
     }
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 10000)
     public void testSchedule() {
         System.out.println("Cheking for Threats....");
         List<KillableContainer> killableContainerList = killableContainerRepository.findAll();
@@ -43,18 +43,18 @@ public class WebsocketController {
             System.out.println(kc.toString());
             simpMessagingTemplate.convertAndSend("/topic/public",
                     new MessageBean("alert", "show"));
-            simpMessagingTemplate.convertAndSend("/topic/public",
+            simpMessagingTemplate.convertAndSend("/topic/soar",
                     new MessageBean("open-alert", "Image: "+kc.getImage() + "ThreatLevel:" +kc.getCve_impact()));
         }
     }
     @GetMapping("/start")
     public void handleThreat() {
-        simpMessagingTemplate.convertAndSend("/topic/public",
+        simpMessagingTemplate.convertAndSend("/topic/soar",
                 new MessageBean("open-alert", "Image: node-10.3.0, ThreatLevel:10"));
     }
     @GetMapping("/stop")
     public void noThreat() {
-        simpMessagingTemplate.convertAndSend("/topic/public",
+        simpMessagingTemplate.convertAndSend("/topic/soarß",
                 new MessageBean("close-alert", "allgood"));
     }
 }

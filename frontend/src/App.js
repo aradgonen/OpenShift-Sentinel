@@ -20,6 +20,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Alert from './components/ui/alert';
 
+import {
+  StompSessionProvider,
+  useSubscription,
+} from "react-stomp-hooks";
 
 const App = () => {
   connect()(App)
@@ -48,6 +52,8 @@ const App = () => {
     }
   }, [currentUser]);
   return (
+    <StompSessionProvider
+    url={"http://localhost:8080/broadcast"}>
     <Router>
           <ThemeProvider theme={theme}>
             <CssBaseline/>
@@ -69,6 +75,7 @@ const App = () => {
 
           </ThemeProvider>
     </Router>
+    </StompSessionProvider>
   );
 };
 

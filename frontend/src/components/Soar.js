@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 import DataService from '../services/data.service';
 import AutoSoar from './ui/autosoar';
 
-const steps = ['Select Namespace', 'Select Pod', 'Kill Pod'];
+const steps = ['default','Select Namespace', 'Select Pod', 'Kill Pod'];
 
 function _renderStepContent(step,data,handleNamespaceChange,handlePodChange,namespace,pod) {
     switch (step) {
@@ -26,7 +26,7 @@ function _renderStepContent(step,data,handleNamespaceChange,handlePodChange,name
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={namespace}
+            value={steps[0]}
             label={"Namespace"}
             onChange={handleNamespaceChange}
           >

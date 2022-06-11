@@ -8,6 +8,7 @@ mydb = myclient["mydatabase"]
 mycol = mydb["audit"]
 namespaces_url = "https://api.projocp.cloudlet-dev.com:6443/api/v1/namespaces"
 pods_url = "https://api.projocp.cloudlet-dev.com:6443/api/v1/pods"
+deployments_and_replicasets_url = "https://api.projocp.cloudlet-dev.com:6443/apis/apps/v1/namespaces"
 payload={}
 headers = {
 'Authorization': 'Bearer ' + os.environ.get("OPENSHIFT_TOKEN")
@@ -27,6 +28,13 @@ def get_openshift_pods():
 def delete_pod_by_namespace(namespace,pod):
     return requests.request("DELETE",namespaces_url+"/"+namespace+"/pods/"+pod, headers=headers, data=payload, verify=False).json()
 
+@api.route('/api/openshift/deployments/<namespace>/<deployment>', methods=['DELETE'])
+def delete_deployment_by_name(namespace,deployment):
+    return requests.request("DELETE",deployments_and_replicasets_url+"/"+namespace+"/deployments/"+deployment, headers=headers, data=payload, verify=False).json()
+
+@api.route('/api/openshift/replicastes/<namespace>/<replicaset>', methods=['DELETE'])
+def delete_replicaset_by_name(namespace,replicaset):
+    return requests.request("DELETE",deployments_and_replicasets_url+"/"+namespace+"/replicasets/"+replicaset, headers=headers, data=payload, verify=False).json()
 @api.route('/api/mongodb/audit/log/countbyusername', methods=['GET'])
 def get_audit_logs_count_by_user():
     audit_dict = {}

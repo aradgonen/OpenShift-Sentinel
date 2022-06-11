@@ -7,32 +7,12 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import { CircularProgress } from "@material-ui/core";
 import { Typography } from "@mui/material";
-
-const sock = new SockJS("http://localhost:8080/broadcast");
-let stompClient = Stomp.over(sock);
-sock.onopen = function(){
-  console.log('open');
-}
-
+import { getMessages } from "../../store/actions/websocket";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function AutoSoar(props) {
-
-  const [messages , setMessages] = React.useState([]);
-
-
-  stompClient.connect({}, function (frame) {
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/public', function (greeting) {
-      if(greeting.body.includes("open-alert")){
-        setMessages(greeting.body)
-      }
-      if(greeting.body.includes("close-alert")){
-          setMessages([])
-      }
-    });
-  });
-  
+  const messages = useSelector((state) => state.ws.messages)
 
   return (
       (messages.length == 0) ? (<div>No Threats Being Handled Now</div>):(

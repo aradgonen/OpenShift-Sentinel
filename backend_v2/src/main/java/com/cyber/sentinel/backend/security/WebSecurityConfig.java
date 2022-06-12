@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/signup**", "/api/auth/signin**", "/api/proxy/openshift/soar/namespaces**", "/api/deploy/policies/**", "/api/compliance/files**", "/api/compliance/files/all**",
                         "/api/proxy/audit/log/countbyusername**","/api/proxy/audit/log/all**",
                         "/api/users/all*",
+                        "/api/proxy/alldeadkc**",
                         "/api/users/**",
                         "/api/proxy/audit/log/**",
                         "/api/auth/signin**",

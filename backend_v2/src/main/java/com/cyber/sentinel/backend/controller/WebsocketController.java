@@ -32,6 +32,10 @@ public class WebsocketController {
         simpMessagingTemplate.convertAndSend("/topic/public",
                 new MessageBean("alert", "show"));
     }
+    @GetMapping("/api/proxy/alldeadkc")
+    public List<KillableContainer> getAllDeadKc(){
+        return killableContainerRepository.findAllByIsAliveFalse();
+    }
     @GetMapping("/hide")
     public void closeAlert() {
         simpMessagingTemplate.convertAndSend("/topic/public",

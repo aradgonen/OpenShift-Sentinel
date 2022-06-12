@@ -39,20 +39,16 @@ minHeight="100vh">
 </Box>)
     }</div>)
 }
-export function _renderTable(data){
-  console.log(data.all_audit_events)
+export function _renderTable(data,title,columns,type){
+  if(type === "audit"){
   data = data.map(line => {
     return ({'event-name':line.stage, 'event-uri':line.requestURI, date:line.requestReceivedTimestamp, username:line.user.username})
   })
+  }
   return (      <MaterialTable
-    columns={[
-      { title: 'Event', field: 'event-name' },
-      { title: 'URI', field: 'event-uri' },
-      { title: 'Date', field: 'date', type: 'date' },
-      { title: 'Username', field: 'username' }
-    ]}
+    columns={columns}
     data={data}
-    title="All Audit Events"
+    title={title}
   />)
 }
 export default function Graphs() {
@@ -96,7 +92,12 @@ useEffect(() => {
   <Grid item xs={12}>
   <Item>
     <Typography>All Audit Events</Typography>
-    {_renderTable(all_audit_events)}
+    {_renderTable(all_audit_events,"All Audit Events",[
+      { title: 'Event', field: 'event-name' },
+      { title: 'URI', field: 'event-uri' },
+      { title: 'Date', field: 'date', type: 'date' },
+      { title: 'Username', field: 'username' }
+    ],"audit")}
     </Item>
   </Grid>
 </Grid>

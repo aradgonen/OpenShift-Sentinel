@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface KillableContainerRepository extends JpaRepository<KillableContainer, Long> {
     Optional<KillableContainer> findByName(String name);
     List<KillableContainer> findAllByIsAliveTrue();
+    List<KillableContainer> findAllByIsAliveFalse();
+
 }

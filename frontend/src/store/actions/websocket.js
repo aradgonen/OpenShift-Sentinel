@@ -1,4 +1,4 @@
-import {getWebsocketError,getWebsocketPending,getWebsocketSuccess} from "./websocket-actions";
+import {getWebsocketError,getWebsocketPending,getWebsocketSuccess,getWebsocketDeadSuccess} from "./websocket-actions";
 
 import WebsocketService from "../../services/websocket.service";
 export function setMessages(message){
@@ -13,3 +13,8 @@ export function setMessages(message){
     dispatch(getWebsocketSuccess(message));
   }
 }
+export function deadMessages(message){
+    return dispatch => {
+      dispatch(getWebsocketDeadSuccess(message));
+    }
+  }

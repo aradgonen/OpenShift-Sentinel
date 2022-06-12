@@ -1,4 +1,4 @@
-import {fetchDataRequest,fetchDataSuccess,fetchDataError, fetchPodsDataSuccess,fetchPodsDataRequest,fetchPodsDataError, fetchAuditDataSuccess, fetchAudotDataError, fetchAuditDataRequest, fetchAuditEventCountByUserRequest, fetchAuditEventCountByUserSuccess, fetchAuditEventCountByUserError, fetchAuditUriCountByUserRequest, fetchAuditUriCountByUserSuccess, fetchAuditUriCountByUserError} from "./data-actions";
+import {fetchDataRequest,fetchDataSuccess,fetchDataError, fetchPodsDataSuccess,fetchPodsDataRequest,fetchPodsDataError, fetchAuditDataSuccess, fetchAudotDataError, fetchAuditDataRequest, fetchAuditEventCountByUserRequest, fetchAuditEventCountByUserSuccess, fetchAuditEventCountByUserError, fetchAuditUriCountByUserRequest, fetchAuditUriCountByUserSuccess, fetchAuditUriCountByUserError, fetchAllAuditError,fetchAllAuditRequest,fetchAllAuditSuccess,fetchAllDeadKcError,fetchAllDeadKcRequest,fetchAllDeadKcSuccess} from "./data-actions";
 
 import DataService from "../../services/data.service";
 export function fetchNamespaces(){
@@ -42,6 +42,28 @@ export function fetchAuditUrisByUser(){
     })
     .catch(error => {
       dispatch(fetchAuditUriCountByUserError(error))
+    })
+  }
+}
+export function fetchAllAudit(){
+  return dispatch => {
+    dispatch(fetchAllAuditRequest());
+    DataService.all_audit_events().then(response => {
+      dispatch(fetchAllAuditSuccess(response.data));
+    })
+    .catch(error => {
+      dispatch(fetchAllAuditError(error))
+    })
+  }
+}
+export function fetchAllDeadKc(){
+  return dispatch => {
+    dispatch(fetchAllDeadKcRequest());
+    DataService.all_dead_kc().then(response => {
+      dispatch(fetchAllDeadKcSuccess(response.data));
+    })
+    .catch(error => {
+      dispatch(fetchAllDeadKcError(error))
     })
   }
 }

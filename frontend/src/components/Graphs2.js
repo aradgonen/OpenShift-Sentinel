@@ -1,4 +1,4 @@
-import { fetchAuditEventsByUser, fetchAuditUrisByUser } from '../store/actions/data'
+import { fetchAllAudit, fetchAuditEventsByUser, fetchAuditUrisByUser } from '../store/actions/data'
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PieChart } from "./charts/piechart";
@@ -39,21 +39,22 @@ minHeight="100vh">
 </Box>)
     }</div>)
 }
-function _renderTable(data){
+export function _renderTable(data,title,columns,type){
+  if(type === "audit"){
+  data = data.map(line => {
+    return ({'event-name':line.stage, 'event-uri':line.requestURI, date:line.requestReceivedTimestamp, username:line.user.username})
+  })
+  }
   return (      <MaterialTable
-    columns={[
-      { title: 'Event', field: 'event-name' },
-      { title: 'URI', field: 'event-uri' },
-      { title: 'Date', field: 'date', type: 'date' },
-      { title: 'Username', field: 'username' }
-    ]}
-    data={[{ 'event-name': 'Access', 'event-uri': '/api', date: 1987, username: "aradgonen" }]}
-    title="Demo Title"
+    columns={columns}
+    data={data}
+    title={title}
   />)
 }
 export default function Graphs() {
   const audit_event_count_by_user = useSelector((state) => state.data)
   const audit_uri_count_by_user = useSelector((state) => state.data)
+  const all_audit_events = useSelector((state) => state.data.all_audit_events)
   const dispatch = useDispatch();
 
   const Item = styled(Paper)(({ theme }) => ({
@@ -70,6 +71,9 @@ export default function Graphs() {
   useEffect(()=> {
     dispatch(fetchAuditUrisByUser());
 },[dispatch]);
+useEffect(() => {
+  dispatch(fetchAllAudit());
+},[dispatch])
   return (
 <Container>
 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
@@ -88,7 +92,12 @@ export default function Graphs() {
   <Grid item xs={12}>
   <Item>
     <Typography>All Audit Events</Typography>
-    {_renderTable()}
+    {_renderTable(all_audit_events,"All Audit Events",[
+      { title: 'Event', field: 'event-name' },
+      { title: 'URI', field: 'event-uri' },
+      { title: 'Date', field: 'date', type: 'date' },
+      { title: 'Username', field: 'username' }
+    ],"audit")}
     </Item>
   </Grid>
 </Grid>

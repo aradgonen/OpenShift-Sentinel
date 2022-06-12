@@ -132,9 +132,11 @@ const ResponsiveAppBar = ({theme, themeHandler}) => {
               }}
             >
               {pages.map((page) => (
+                <Link key={page + "link"} to={baseUrl + page}>
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
+              </Link>
               ))}
             </Menu>
           </Box>

@@ -32,6 +32,7 @@ def get_container_images():
 
                 single_container_result['image'] = container['image']
                 single_container_result['name'] = container['name']
+                single_container_result['uid'] = container_item['metadata']['uid']
                 single_container_result['namespace'] = container_item['metadata']['namespace']
                 single_container_result['ownerKind'] = container_item['metadata']['ownerReferences'][0]['kind']
                 single_container_result['ownerName'] = container_item['metadata']['ownerReferences'][0]['name']

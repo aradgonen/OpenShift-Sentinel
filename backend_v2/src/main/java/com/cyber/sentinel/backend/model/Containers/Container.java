@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 public class Container {
     private String name;
+    private String uid;
     private String image;
     private String namespace;
     private String ownerKind;
@@ -20,8 +21,9 @@ public class Container {
 
     }
 
-    public Container(String name, String image, String namespace, String ownerKind, String ownerName, String program, String version, String registry, String ownerOwnerKind, String ownerOwnerName) {
+    public Container(String name, String uid, String image, String namespace, String ownerKind, String ownerName, String program, String version, String registry, String ownerOwnerKind, String ownerOwnerName) {
         this.name = name;
+        this.uid = uid;
         this.image = image;
         this.namespace = namespace;
         this.ownerKind = ownerKind;
@@ -113,8 +115,13 @@ public class Container {
         this.registry = registry;
     }
 
+    public String getUid() {
+        return uid;
+    }
 
-
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }
 
 

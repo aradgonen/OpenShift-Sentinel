@@ -18,6 +18,10 @@ public class KillableContainer {
     private String name;
 
     @NotBlank
+    @Size(max = 100)
+    private String uid;
+
+    @NotBlank
     @Size(max = 50)
     private String image;
 
@@ -69,7 +73,7 @@ public class KillableContainer {
     private String cve_attackComplexity;
 
     @NotBlank
-    @Size(max = 500)
+    @Size(max = 50000)
     private String cve_description;
 
 
@@ -79,8 +83,9 @@ public class KillableContainer {
 
     }
 
-    public KillableContainer(String name, String image, String namespace, String ownerName,String ownerKind,String ownerOwnerName,String ownerOwnerKind, String program, String version, String registry, String cve_impact, String cve_attackVercotr, float cve_score, String cve_userInteraction, String cve_attackComplexity, String cve_description, boolean isAlive) {
+    public KillableContainer(String name, String uid, String image, String namespace, String ownerName, String ownerKind, String ownerOwnerName, String ownerOwnerKind, String program, String version, String registry, String cve_impact, String cve_attackVercotr, float cve_score, String cve_userInteraction, String cve_attackComplexity, String cve_description, boolean isAlive) {
         this.name = name;
+        this.uid = uid;
         this.image = image;
         this.namespace = namespace;
         this.ownerName = ownerName;
@@ -99,8 +104,9 @@ public class KillableContainer {
         this.isAlive = isAlive;
     }
 
-    public KillableContainer( Container container, CVE cve, boolean isAlive) {
+    public KillableContainer(Container container, CVE cve, boolean isAlive) {
         this.name = container.getName();
+        this.uid = container.getUid();
         this.image = container.getImage();
         this.namespace = container.getNamespace();
         this.ownerName = container.getOwnerName();
@@ -129,6 +135,14 @@ public class KillableContainer {
 
     public String getName() {
         return name;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setName(String name) {

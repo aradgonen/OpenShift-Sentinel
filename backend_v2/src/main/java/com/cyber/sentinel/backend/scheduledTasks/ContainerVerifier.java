@@ -18,8 +18,8 @@ import javax.validation.constraints.Null;
 public class ContainerVerifier {
 
     RestTemplate restTemplate = new RestTemplate();
-    String containterVersionAPI = "http://localhost:5004/api/images/";
-    String cveAPI = "http://localhost:5003/api/cve/";
+    String containterVersionAPI = "http://"+System.getenv("IMAGES_URL")+"/api/images/";
+    String cveAPI = "http://"+System.getenv("CVE_URL")+"/api/cve/";
 
     @Autowired
     KillableContainerRepository killableContainerRepository;
@@ -47,9 +47,13 @@ public class ContainerVerifier {
                         worstCVE = new CVE(cve);
                     }
                 }
-                if (killableContainerRepository.findByName(container.getName()).isEmpty()) {
+
+
+                if (killableContainerRepository.findByName(container.getUid()).isEmpty()) {
                     KillableContainer killableContainer = new KillableContainer(container, worstCVE, true);
-                    killableContainerRepository.save(killableContainer);
+                    killableContainerRepository.flush();
+                    killableContainerRepository.saveAndFlush(killableContainer);
+                    killableContainerRepository.flush();
                 }
             }
             System.out.println();

@@ -1,4 +1,4 @@
-import {FETCH_NAMESPACES_PENDING, FETCH_NAMESPACES_SUCCESS, FETCH_NAMESPACES_ERROR,FETCH_PODS_PENDING,FETCH_PODS_SUCCESS,FETCH_PODS_ERROR, FETCH_AUDIT_EVENT_COUNT_BY_USER_PENDING, FETCH_AUDIT_EVENT_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_EVENT_COUNT_BY_USER_ERROR,FETCH_AUDIT_URI_COUNT_BY_USER_PENDING, FETCH_AUDIT_URI_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_URI_COUNT_BY_USER_ERROR} from '../actions/data-types';
+import {FETCH_NAMESPACES_PENDING, FETCH_NAMESPACES_SUCCESS, FETCH_NAMESPACES_ERROR,FETCH_PODS_PENDING,FETCH_PODS_SUCCESS,FETCH_PODS_ERROR, FETCH_AUDIT_EVENT_COUNT_BY_USER_PENDING, FETCH_AUDIT_EVENT_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_EVENT_COUNT_BY_USER_ERROR,FETCH_AUDIT_URI_COUNT_BY_USER_PENDING, FETCH_AUDIT_URI_COUNT_BY_USER_SUCCESS, FETCH_AUDIT_URI_COUNT_BY_USER_ERROR, FETCH_ALL_AUDIT_ERROR,FETCH_ALL_AUDIT_PENDING,FETCH_ALL_AUDIT_SUCCESS,FETCH_ALL_DEADKC_ERROR,FETCH_ALL_DEADKC_PENDING,FETCH_ALL_DEADKC_SUCCESS} from '../actions/data-types';
 
 const initialState = {
     pending: false,
@@ -6,6 +6,8 @@ const initialState = {
     pods: [],
     audit_event_count_by_user: [],
     audit_uri_count_by_user: [],
+    all_audit_events: [],
+    all_dead_kc: [],
     error: null
 }
 function dataReducer(state = initialState, action) {
@@ -23,7 +25,9 @@ function dataReducer(state = initialState, action) {
                 namespaces: action.item,
                 pods: state.pods,
                 audit_event_count_by_user: state.audit_event_count_by_user,
-                audit_uri_count_by_user: state.audit_uri_count_by_user
+                audit_uri_count_by_user: state.audit_uri_count_by_user,
+                all_audit_events: state.all_audit_events,
+                all_dead_kc:state.all_dead_kc
             }
         case FETCH_NAMESPACES_ERROR:
             return {
@@ -45,7 +49,9 @@ function dataReducer(state = initialState, action) {
                 pods: action.item,
                 namespaces: state.namespaces,
                 audit_event_count_by_user: state.audit_event_count_by_user,
-                audit_uri_count_by_user: state.audit_uri_count_by_user
+                audit_uri_count_by_user: state.audit_uri_count_by_user,
+                all_audit_events:state.all_audit_events,
+                all_dead_kc:state.all_dead_kc
             }
         case FETCH_PODS_ERROR:
             return {
@@ -67,7 +73,9 @@ function dataReducer(state = initialState, action) {
                 pods: state.pods,
                 namespaces: state.namespaces,
                 audit_event_count_by_user: action.item,
-                audit_uri_count_by_user: state.audit_uri_count_by_user
+                audit_uri_count_by_user: state.audit_uri_count_by_user,
+                all_audit_events:state.all_audit_events,
+                all_dead_kc:state.all_dead_kc
             }
         case FETCH_AUDIT_EVENT_COUNT_BY_USER_ERROR:
             return {
@@ -90,7 +98,9 @@ function dataReducer(state = initialState, action) {
                 pods: state.pods,
                 namespaces: state.namespaces,
                 audit_event_count_by_user: state.audit_event_count_by_user,
-                audit_uri_count_by_user: action.item
+                audit_uri_count_by_user: action.item,
+                all_audit_events:state.all_audit_events,
+                all_dead_kc:state.all_dead_kc
             }
         case FETCH_AUDIT_URI_COUNT_BY_USER_ERROR:
             return {
@@ -98,8 +108,80 @@ function dataReducer(state = initialState, action) {
                 pending: false,
                 error: action.error,
                 item: []
+            } 
+        case FETCH_ALL_AUDIT_PENDING:
+            return {
+                ...state,
+                pending: true,
+                error: null
             }
-        default: 
+        case FETCH_ALL_AUDIT_SUCCESS:
+            return {
+                ...state,
+                pending: false,
+                pods: state.pods,
+                namespaces: state.namespaces,
+                audit_event_count_by_user: state.audit_event_count_by_user,
+                audit_uri_count_by_user: state.audit_uri_count_by_user,
+                all_audit_events:action.item,
+                all_dead_kc:state.all_dead_kc
+            }
+        case FETCH_ALL_AUDIT_ERROR:
+            return {
+                ...state,
+                pending: false,
+                error: action.error,
+                item: []
+            }
+                case FETCH_ALL_AUDIT_PENDING:
+            return {
+                ...state,
+                pending: true,
+                error: null
+            }
+        case FETCH_ALL_AUDIT_SUCCESS:
+            return {
+                ...state,
+                pending: false,
+                pods: state.pods,
+                namespaces: state.namespaces,
+                audit_event_count_by_user: state.audit_event_count_by_user,
+                audit_uri_count_by_user: state.audit_uri_count_by_user,
+                all_audit_events:action.item,
+                all_dead_kc:state.all_dead_kc
+            }
+        case FETCH_ALL_DEADKC_ERROR:
+            return {
+                ...state,
+                pending: false,
+                error: action.error,
+                item: []
+            }
+            case FETCH_ALL_DEADKC_PENDING:
+                return {
+                    ...state,
+                    pending: true,
+                    error: null
+                }
+            case FETCH_ALL_DEADKC_SUCCESS:
+                return {
+                    ...state,
+                    pending: false,
+                    pods: state.pods,
+                    namespaces: state.namespaces,
+                    audit_event_count_by_user: state.audit_event_count_by_user,
+                    audit_uri_count_by_user: state.audit_uri_count_by_user,
+                    all_audit_events:state.all_audit_events,
+                    all_dead_kc:action.item
+                }
+            case FETCH_ALL_AUDIT_ERROR:
+                return {
+                    ...state,
+                    pending: false,
+                    error: action.error,
+                    item: []
+                }
+        default:
             return state;
     }
 }

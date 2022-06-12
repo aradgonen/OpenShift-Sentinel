@@ -34,6 +34,8 @@ services:
       - PROXY_URL=openshift-api-fetcher:5555/
       - DEPLOY_URL=openshift-yaml-fetcher:5001/
       - COMPLIANCE_URL=git-yaml-fetcher:5002/ 
+      - IMAGES_URL=openshift-container-image-fetcher:5004/
+      - CVE_URL=cve-api:5003/
     depends_on:
       - db
     restart: always

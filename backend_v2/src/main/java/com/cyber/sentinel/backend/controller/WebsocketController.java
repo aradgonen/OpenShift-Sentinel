@@ -62,7 +62,7 @@ public class WebsocketController {
                 }
                 kc.setAlive(false);
                 killableContainerRepository.flush();
-                killableContainerRepository.save(kc);
+                killableContainerRepository.saveAndFlush(kc);
             }
 
         }

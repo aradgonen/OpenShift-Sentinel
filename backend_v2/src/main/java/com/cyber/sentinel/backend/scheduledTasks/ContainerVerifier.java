@@ -52,7 +52,7 @@ public class ContainerVerifier {
                 if (killableContainerRepository.findByName(container.getUid()).isEmpty()) {
                     KillableContainer killableContainer = new KillableContainer(container, worstCVE, true);
                     killableContainerRepository.flush();
-                    killableContainerRepository.save(killableContainer);
+                    killableContainerRepository.saveAndFlush(killableContainer);
                     killableContainerRepository.flush();
                 }
             }

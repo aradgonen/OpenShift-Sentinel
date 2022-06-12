@@ -9,7 +9,7 @@ import {
   StompSessionProvider,
   useSubscription,
 } from "react-stomp-hooks";
-import { setMessages } from "../../store/actions/websocket";
+import { setMessages,deadMessages } from "../../store/actions/websocket";
 import { useDispatch, useSelector } from "react-redux";
 const AlertPopup = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,6 +49,7 @@ export default function Alert() {
   // });
   useSubscription("/topic/public", (message) => (handleOpen(message.body.includes("show"))));
   useSubscription("/topic/soar", (message) => dispatch(setMessages(message.body)));
+  useSubscription("/topic/dead", (message) => dispatch(deadMessages(message.body)));
 
 
   return (

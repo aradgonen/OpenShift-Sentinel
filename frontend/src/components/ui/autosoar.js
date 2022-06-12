@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function AutoSoar(props) {
   const messages = useSelector((state) => state.ws.messages)
-
+  const dead = useSelector((state) => state.ws.dead)
   return (
       (messages.length == 0) ? (<div>No Threats Being Handled Now</div>):(
 

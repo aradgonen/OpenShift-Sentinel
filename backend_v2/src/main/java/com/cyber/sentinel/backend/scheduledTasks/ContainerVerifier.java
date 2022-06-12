@@ -18,8 +18,8 @@ import javax.validation.constraints.Null;
 public class ContainerVerifier {
 
     RestTemplate restTemplate = new RestTemplate();
-    String containterVersionAPI = "http://localhost:5004/api/images/";
-    String cveAPI = "http://localhost:5003/api/cve/";
+    String containterVersionAPI = "http://"+System.getenv("IMAGES_URL")+"/api/images/";
+    String cveAPI = "http://"+System.getenv("CVE_URL")+"/api/cve/";
 
     @Autowired
     KillableContainerRepository killableContainerRepository;

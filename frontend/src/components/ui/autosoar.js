@@ -9,13 +9,16 @@ import { CircularProgress } from "@material-ui/core";
 import { Typography } from "@mui/material";
 import { getMessages } from "../../store/actions/websocket";
 import { useDispatch, useSelector } from "react-redux";
-
+import { _renderTable } from "../Graphs2";
 
 export default function AutoSoar(props) {
   const messages = useSelector((state) => state.ws.messages)
+  const threats_history = useSelector((state) => state.data.all_audit_events)
   const dead = useSelector((state) => state.ws.dead)
   return (
-      (messages.length == 0) ? (<div>No Threats Being Handled Now</div>):(
+    <div>
+    {
+      ((messages.length - dead.length) == 0) ? (<div>No Threats Being Handled Now</div>):(
 
         messages.map(message => {
           if(JSON.parse(message).alive){
@@ -34,5 +37,8 @@ alignItems="center">
           )}
         })
     )
+      }
+      {_renderTable(threats_history,'title','columns')}
+      </div>
   );
 }

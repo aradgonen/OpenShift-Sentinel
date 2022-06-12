@@ -43,13 +43,14 @@ public class WebsocketController {
         List<KillableContainer> killableContainerList = killableContainerRepository.findAll();
         for (KillableContainer kc  : killableContainerList
              ) {
+            if(kc.isAlive()) {
             System.out.println(kc.toString());
             simpMessagingTemplate.convertAndSend("/topic/public",
                     new MessageBean("alert", "show"));
 //            simpMessagingTemplate.convertAndSend("/topic/soar",
 //                    new MessageBean("open-alert", "'Image': '"+kc.getImage() + "','ThreatLevel':'" +kc.getCve_impact()+ "','ID':'" + kc.getId() + "'" ));
             simpMessagingTemplate.convertAndSend("/topic/soar", kc);
-            if(kc.isAlive()) {
+
                 Thread.sleep(5000);
                 if (kc.getOwnerOwnerKind().equals("NONE")) {
                     restTemplate.delete(baseUrl + "api/openshift/replicasets/" + kc.getNamespace() + "/" + kc.getOwnerName());

@@ -19,11 +19,14 @@ const audit_events_by_user = () => {
 const audit_routes_by_user = () => {
   return axios.get(API_URL + "audit/log/uris");
 }
-
+const all_audit_events = () => {
+  return axios.get(API_URL + "audit/log/all");
+}
 export default {
     openshift_list_namespaces,
     openshift_list_pods,
     openshift_delete_pod,
     audit_events_by_user,
-    audit_routes_by_user
+    audit_routes_by_user,
+    all_audit_events
 };

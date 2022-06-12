@@ -66,5 +66,9 @@ public class RestProxyController {
         String raw_data = restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/uris",String.class);
         return raw_data;
     }
-    //add more
+    @RequestMapping(value = "/audit/log/all")
+    public String getAllAuditEvents() {
+        String raw_data = restTemplate.getForObject(baseUrl+"api/mongodb/audit/log/all",String.class);
+        return raw_data;
+    }
 }

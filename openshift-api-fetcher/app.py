@@ -2,6 +2,7 @@ from flask import Flask, json
 import requests
 import os
 import pymongo
+from bson.json_util import dumps
 
 myclient = pymongo.MongoClient("mongodb://"+os.environ.get("MONGODB_URL")+":27017/")
 mydb = myclient["mydatabase"]
@@ -54,6 +55,17 @@ def get_audit_logs_count_by_user():
 @api.route('/api/mongodb/audit/log/uris', methods=['GET'])
 def get_audit_logs_uris():
     return get_audit_uris()
+
+@api.route('/api/mongodb/audit/log/all', methods=['GET'])
+def get_all_audit_logs():
+    return all_audit_logs()
+
+def all_audit_logs():
+    # data = []
+    return str(dumps(list(mycol.find().limit(50))))
+    # for document in mycol.find().limit(50):
+    #     data.append(document)
+    # return str(data)
 def get_audit_users():
     data = []
     for document in mycol.distinct("user.username"):

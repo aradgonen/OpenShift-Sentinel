@@ -19,8 +19,8 @@ public class ContainerVerifier {
 
     RestTemplate restTemplate = new RestTemplate();
     String containterVersionAPI = "http://"+System.getenv("IMAGES_URL")+"/api/images/";
-    String cveAPI = "http://"+System.getenv("CVE_URL")+"/api/cve/";
-
+    String cveAPI = "http://"+System.getenv("CVE_URL")+"/api/cve/";ß
+ß
     @Autowired
     KillableContainerRepository killableContainerRepository;
 
